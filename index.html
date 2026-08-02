@@ -10,11 +10,11 @@
     <!-- FAVICON DINÁMICO CON LA BILLETERA -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22 fill=%22%232563eb%22><path d=%22M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V192c0-35.3-28.7-64-64-64H80c-8.8 0-16-7.2-16-16s7.2-16 16-16H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H64zM416 336c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32z%22/></svg>">
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-gray-50 text-gray-800 font-sans pb-16 md:pb-0">
 
     <div class="flex h-screen overflow-hidden">
 
-        <!-- Menú Lateral -->
+        <!-- Menú Lateral (Para Computadoras) -->
         <aside class="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
             <div class="p-6">
                 <h1 class="text-2xl font-bold text-blue-600"><i class="fa-solid fa-wallet mr-2"></i>Finanzas OS</h1>
@@ -244,11 +244,23 @@
             </div>
 
             <!-- Botón Flotante -->
-            <button id="btn-abrir-modal" class="absolute bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-lg text-2xl flex items-center justify-center transition transform hover:scale-110">
+            <button id="btn-abrir-modal" class="absolute bottom-20 md:bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-lg text-2xl flex items-center justify-center transition transform hover:scale-110 z-40">
                 <i class="fa-solid fa-plus"></i>
             </button>
 
         </main>
+    </div>
+
+    <!-- NUEVO: Menú de Navegación Inferior (Solo visible en celulares) -->
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around p-2 z-50 shadow-lg">
+        <button id="btn-mob-resumen" class="flex flex-col items-center py-1 px-4 text-blue-600 font-bold">
+            <i class="fa-solid fa-chart-pie text-xl mb-1"></i>
+            <span class="text-xs">Resumen</span>
+        </button>
+        <button id="btn-mob-calculadora" class="flex flex-col items-center py-1 px-4 text-gray-500 font-medium">
+            <i class="fa-solid fa-calculator text-xl mb-1"></i>
+            <span class="text-xs">Calculadora</span>
+        </button>
     </div>
 
     <!-- Modal Transacción -->
@@ -276,32 +288,57 @@
     </div>
 
     <script>
-        // --- NAVEGACIÓN ---
+        // --- NAVEGACIÓN COMPUTADORA Y MÓVIL ---
         const btnNavResumen = document.getElementById('btn-nav-resumen');
         const btnNavCalculadora = document.getElementById('btn-nav-calculadora');
+        const btnMobResumen = document.getElementById('btn-mob-resumen');
+        const btnMobCalculadora = document.getElementById('btn-mob-calculadora');
+        
         const vistaResumen = document.getElementById('vista-resumen');
         const vistaCalculadora = document.getElementById('vista-calculadora');
         const botonFlotante = document.getElementById('btn-abrir-modal');
 
-        btnNavCalculadora.addEventListener('click', function() {
+        function cambiarACalculadora() {
             vistaCalculadora.classList.remove('hidden');
             vistaResumen.classList.add('hidden');
             botonFlotante.classList.add('hidden');
+            
+            // Estilos Escritorio
             btnNavCalculadora.classList.add('bg-blue-50', 'text-blue-700');
             btnNavCalculadora.classList.remove('text-gray-600');
             btnNavResumen.classList.remove('bg-blue-50', 'text-blue-700');
             btnNavResumen.classList.add('text-gray-600');
-        });
 
-        btnNavResumen.addEventListener('click', function() {
+            // Estilos Móvil
+            btnMobCalculadora.classList.add('text-blue-600', 'font-bold');
+            btnMobCalculadora.classList.remove('text-gray-500', 'font-medium');
+            btnMobResumen.classList.remove('text-blue-600', 'font-bold');
+            btnMobResumen.classList.add('text-gray-500', 'font-medium');
+        }
+
+        function cambiarAResumen() {
             vistaResumen.classList.remove('hidden');
             vistaCalculadora.classList.add('hidden');
             botonFlotante.classList.remove('hidden');
+            
+            // Estilos Escritorio
             btnNavResumen.classList.add('bg-blue-50', 'text-blue-700');
             btnNavResumen.classList.remove('text-gray-600');
             btnNavCalculadora.classList.remove('bg-blue-50', 'text-blue-700');
             btnNavCalculadora.classList.add('text-gray-600');
-        });
+
+            // Estilos Móvil
+            btnMobResumen.classList.add('text-blue-600', 'font-bold');
+            btnMobResumen.classList.remove('text-gray-500', 'font-medium');
+            btnMobCalculadora.classList.remove('text-blue-600', 'font-bold');
+            btnMobCalculadora.classList.add('text-gray-500', 'font-medium');
+        }
+
+        btnNavCalculadora.addEventListener('click', cambiarACalculadora);
+        btnMobCalculadora.addEventListener('click', cambiarACalculadora);
+
+        btnNavResumen.addEventListener('click', cambiarAResumen);
+        btnMobResumen.addEventListener('click', cambiarAResumen);
 
         // --- TASAS EN VIVO ---
         let tasaUsdtCompraGlobal = 0; 
