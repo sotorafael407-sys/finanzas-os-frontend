@@ -236,23 +236,34 @@
                         <h3 class="text-lg font-bold mb-4 border-b pb-2">Control de Operaciones y Acreditaciones</h3>
                         
                         <div class="space-y-3">
-                            <!-- BDV -->
+                            <!-- BDV (CON CÁLCULO DE GANANCIA Y TASAS) -->
                             <div class="border border-gray-200 rounded-lg overflow-hidden">
                                 <button class="accordion-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 font-bold text-gray-700 transition outline-none">
                                     <span><i class="fa-solid fa-building text-blue-600 mr-2"></i> BDV (Venezuela)</span>
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
-                                    <div class="mb-3">
-                                        <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
-                                            <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
-                                        </button>
-                                        <input type="text" id="titular-bdv" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. María Pérez">
+                                    
+                                    <!-- Titular y Tasas Específicas -->
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 bg-blue-50/50 p-3 rounded-lg border border-blue-100">
+                                        <div>
+                                            <label class="block text-xs font-bold text-gray-700 mb-1">Titular de la Cuenta</label>
+                                            <input type="text" id="titular-bdv" class="w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. María Pérez">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-gray-700 mb-1">Tasa Vendida (USDT)</label>
+                                            <input type="number" id="tasa-venta-bdv" class="input-calc-bdv w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. 38.50">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-gray-700 mb-1">Tasa Intervención</label>
+                                            <input type="number" id="tasa-inter-bdv" class="input-calc-bdv w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. 36.80">
+                                        </div>
                                     </div>
-                                    <div class="flex flex-col md:flex-row gap-4 items-end">
+
+                                    <div class="flex flex-col md:flex-row gap-4 items-end mb-3">
                                         <div class="w-full md:w-1/2">
                                             <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
-                                            <input type="number" id="input-bdv" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
+                                            <input type="number" id="input-bdv" class="input-calc-bdv block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
                                         </div>
                                         <button id="btn-calc-bdv" class="w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition">Calcular</button>
                                         <div class="w-full md:w-1/4 bg-gray-50 p-2 rounded text-center border">
@@ -260,7 +271,14 @@
                                             <div id="resultado-bdv" class="font-bold text-green-600">₮ 0.00</div>
                                         </div>
                                     </div>
-                                    <button id="btn-save-bdv" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
+
+                                    <!-- Resultado de Ganancia en vivo para BDV -->
+                                    <div class="bg-green-50 p-3 rounded-lg border border-green-200 flex justify-between items-center mb-3">
+                                        <span class="text-xs font-bold text-green-800 uppercase tracking-wide">Ganancia Neta Estimada:</span>
+                                        <span id="ganancia-res-bdv" class="text-lg font-bold text-green-600">₮ 0.00</span>
+                                    </div>
+
+                                    <button id="btn-save-bdv" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
                                 </div>
                             </div>
 
@@ -347,8 +365,64 @@
                                     <button id="btn-save-bancamiga" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
                                 </div>
                             </div>
+                            
+                            <!-- PROVINCIAL -->
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <button class="accordion-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 font-bold text-gray-700 transition outline-none">
+                                    <span><i class="fa-solid fa-building text-blue-600 mr-2"></i> BBVA Provincial</span>
+                                    <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                                </button>
+                                <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
+                                    <div class="mb-3">
+                                        <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
+                                            <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
+                                        </button>
+                                        <input type="text" id="titular-provincial" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. Pedro Pérez">
+                                    </div>
+                                    <div class="flex flex-col md:flex-row gap-4 items-end">
+                                        <div class="w-full md:w-1/2">
+                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
+                                            <input type="number" id="input-provincial" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
+                                        </div>
+                                        <button id="btn-calc-provincial" class="w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition">Calcular</button>
+                                        <div class="w-full md:w-1/4 bg-gray-50 p-2 rounded text-center border">
+                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
+                                            <div id="resultado-provincial" class="font-bold text-green-600">₮ 0.00</div>
+                                        </div>
+                                    </div>
+                                    <button id="btn-save-provincial" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
+                                </div>
+                            </div>
+                            
+                            <!-- BANESCO -->
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <button class="accordion-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 font-bold text-gray-700 transition outline-none">
+                                    <span><i class="fa-solid fa-building text-blue-600 mr-2"></i> Banesco</span>
+                                    <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
+                                </button>
+                                <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
+                                    <div class="mb-3">
+                                        <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
+                                            <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
+                                        </button>
+                                        <input type="text" id="titular-banesco" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. Luis Silva">
+                                    </div>
+                                    <div class="flex flex-col md:flex-row gap-4 items-end">
+                                        <div class="w-full md:w-1/2">
+                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
+                                            <input type="number" id="input-banesco" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
+                                        </div>
+                                        <button id="btn-calc-banesco" class="w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition">Calcular</button>
+                                        <div class="w-full md:w-1/4 bg-gray-50 p-2 rounded text-center border">
+                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
+                                            <div id="resultado-banesco" class="font-bold text-green-600">₮ 0.00</div>
+                                        </div>
+                                    </div>
+                                    <button id="btn-save-banesco" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
+                                </div>
+                            </div>
 
-                            <!-- PLAZA (7 Días) -->
+                            <!-- PLAZA -->
                             <div class="border border-blue-200 rounded-lg overflow-hidden shadow-sm">
                                 <button class="accordion-btn w-full flex justify-between items-center p-4 bg-blue-50 hover:bg-blue-100 font-bold text-blue-800 transition outline-none">
                                     <span><i class="fa-solid fa-clock text-blue-600 mr-2"></i> Banco Plaza (Acreditación 7 Días)</span>
@@ -399,12 +473,12 @@
                     </div>
                 </div>
 
-                <!-- VISTA 3: HISTORIAL -->
+                <!-- VISTA 3: HISTORIAL (CON COLUMNA DE GANANCIA) -->
                 <div id="vista-historial" class="hidden">
                     <header class="flex flex-col md:flex-row md:justify-between md:items-center mb-8 mt-6 md:mt-0">
                         <div>
                             <h2 class="text-3xl font-bold">Historial de Compras</h2>
-                            <p class="text-gray-500 mt-1">Registro cronológico persistente en Supabase</p>
+                            <p class="text-gray-500 mt-1">Registro cronológico y ganancias obtenidas en Supabase</p>
                         </div>
                     </header>
 
@@ -418,11 +492,12 @@
                                         <th class="p-3 font-semibold">Titular / Cuenta</th>
                                         <th class="p-3 font-semibold text-right">Inversión ($)</th>
                                         <th class="p-3 font-semibold text-right">Neto (USDT)</th>
+                                        <th class="p-3 font-semibold text-right">Ganancia (USDT)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tabla-historial" class="text-sm text-gray-700 divide-y divide-gray-100">
                                     <tr id="historial-vacio">
-                                        <td colspan="5" class="text-center p-8 text-gray-400 italic">Cargando datos desde la nube...</td>
+                                        <td colspan="6" class="text-center p-8 text-gray-400 italic">Cargando datos desde la nube...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -549,7 +624,6 @@
                 badge.innerText = "Perfil Admin";
                 badge.className = "absolute top-4 right-4 md:top-8 md:right-8 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-indigo-100 text-indigo-700 border border-indigo-200 z-10";
                 
-                // Cargar datos reales de la nube
                 cargarHistorialSupabase();
                 cargarSaldoBinanceSupabase();
             } else {
@@ -563,7 +637,7 @@
                     btn.disabled = true;
                 });
 
-                document.getElementById('tabla-historial').innerHTML = `<tr id="historial-vacio"><td colspan="5" class="text-center p-8 text-gray-400 italic">El modo visitante no muestra el historial de compras personal.</td></tr>`;
+                document.getElementById('tabla-historial').innerHTML = `<tr id="historial-vacio"><td colspan="6" class="text-center p-8 text-gray-400 italic">El modo visitante no muestra el historial de compras personal.</td></tr>`;
             }
             obtenerTasasEnVivo();
         }
@@ -640,12 +714,14 @@
                 tasaIntervencionGlobal = dataBcv.promedio + (dataBcv.promedio * 0.005);
                 document.getElementById('tasa-intervencion').innerText = "Bs. " + tasaIntervencionGlobal.toFixed(2);
                 document.getElementById('profit-tasa-inter').value = tasaIntervencionGlobal.toFixed(2);
+                document.getElementById('tasa-inter-bdv').value = tasaIntervencionGlobal.toFixed(2);
             } catch (error) {}
             try {
                 const respuesta = await fetch('https://api-finanzas-os.vercel.app/api/tasas'); const datosBinance = await respuesta.json();
                 document.getElementById('tasa-usdt-compra').innerText = "Bs. " + datosBinance.compra.toFixed(2);
                 document.getElementById('tasa-usdt-venta').innerText = "Bs. " + datosBinance.venta.toFixed(2);
                 document.getElementById('profit-tasa-venta').value = datosBinance.venta.toFixed(2);
+                document.getElementById('tasa-venta-bdv').value = datosBinance.venta.toFixed(2);
             } catch (error) {}
         }
 
@@ -685,7 +761,40 @@
         document.querySelectorAll('.input-calc').forEach(i => i.addEventListener('input', calcularProfitsAutomatica));
 
         // ==========================================
-        // CÁLCULO EN BANCOS
+        // CÁLCULO ESPECÍFICO BDV (CON GANANCIA EN VIVO)
+        // ==========================================
+        function calcularBdvConGanancia() {
+            const usd = parseFloat(document.getElementById('input-bdv').value) || 0;
+            const tVenta = parseFloat(document.getElementById('tasa-venta-bdv').value) || 0;
+            const tInter = parseFloat(document.getElementById('tasa-inter-bdv').value) || 0;
+            
+            const resUsdt = document.getElementById('resultado-bdv');
+            const resGanancia = document.getElementById('ganancia-res-bdv');
+
+            if (usd <= 0) {
+                resUsdt.innerText = "₮ 0.00";
+                resGanancia.innerText = "₮ 0.00";
+                return;
+            }
+
+            // Neto USDT que llega al banco (tarjeta 2.5% + bpay 4.1%)
+            const usdtBdv = (usd * (1 - 0.025)) * (1 - 0.041);
+            resUsdt.innerText = "₮ " + usdtBdv.toFixed(2);
+
+            if (tVenta > 0 && tInter > 0) {
+                const inversionUsdt = (usd * tInter) / tVenta;
+                const gananciaBdv = usdtBdv - inversionUsdt;
+                resGanancia.innerText = "₮ " + gananciaBdv.toFixed(2);
+                resGanancia.className = gananciaBdv >= 0 ? 'text-lg font-bold text-green-600' : 'text-lg font-bold text-red-600';
+            } else {
+                resGanancia.innerText = "₮ 0.00";
+            }
+        }
+        document.querySelectorAll('.input-calc-bdv').forEach(i => i.addEventListener('input', calcularBdvConGanancia));
+        document.getElementById('btn-calc-bdv').addEventListener('click', calcularBdvConGanancia);
+
+        // ==========================================
+        // CÁLCULO EN OTROS BANCOS
         // ==========================================
         function calcularNetoUsdt(inputId, resultadoId, descuentoTarjeta, descuentoBpay = 0.041) {
             const usd = parseFloat(document.getElementById(inputId).value) || 0;
@@ -694,10 +803,11 @@
             document.getElementById(resultadoId).innerText = "₮ " + neto.toFixed(2);
         }
 
-        document.getElementById('btn-calc-bdv').addEventListener('click', () => calcularNetoUsdt('input-bdv', 'resultado-bdv', 0.025));
         document.getElementById('btn-calc-bt').addEventListener('click', () => calcularNetoUsdt('input-bt', 'resultado-bt', 0.025));
         document.getElementById('btn-calc-bancamiga').addEventListener('click', () => calcularNetoUsdt('input-bancamiga', 'resultado-bancamiga', 0.048));
         document.getElementById('btn-calc-banplus').addEventListener('click', () => calcularNetoUsdt('input-banplus', 'resultado-banplus', 0.035, 0));
+        document.getElementById('btn-calc-provincial').addEventListener('click', () => calcularNetoUsdt('input-provincial', 'resultado-provincial', 0, 0.041));
+        document.getElementById('btn-calc-banesco').addEventListener('click', () => calcularNetoUsdt('input-banesco', 'resultado-banesco', 0, 0.041));
 
         document.getElementById('btn-calc-plaza').addEventListener('click', function() {
             const monto = parseFloat(document.getElementById('input-plaza').value) || 0;
@@ -712,7 +822,7 @@
         });
 
         // ==========================================
-        // OPERACIONES SUPABASE (HISTORIAL Y SALDO)
+        // OPERACIONES SUPABASE (HISTORIAL CON GANANCIA)
         // ==========================================
         function mostrarToast(msg = "Operación guardada en Supabase") {
             const toast = document.getElementById('toast-success');
@@ -721,7 +831,6 @@
             setTimeout(() => { toast.classList.remove('toast-show'); }, 3000);
         }
 
-        // Cargar Historial desde Supabase
         async function cargarHistorialSupabase() {
             const tabla = document.getElementById('tabla-historial');
             const { data, error } = await supabaseClient
@@ -729,13 +838,10 @@
                 .select('*')
                 .order('id', { ascending: false });
 
-            if (error) {
-                console.error("Error al cargar historial:", error);
-                return;
-            }
+            if (error) { console.error("Error al cargar historial:", error); return; }
 
             if (!data || data.length === 0) {
-                tabla.innerHTML = `<tr id="historial-vacio"><td colspan="5" class="text-center p-8 text-gray-400 italic">No hay operaciones registradas aún.</td></tr>`;
+                tabla.innerHTML = `<tr id="historial-vacio"><td colspan="6" class="text-center p-8 text-gray-400 italic">No hay operaciones registradas aún.</td></tr>`;
                 return;
             }
 
@@ -743,6 +849,9 @@
             data.forEach(item => {
                 const f = new Date(item.created_at);
                 const fechaStr = f.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                const gananciaTxt = item.ganancia_neta || '₮ 0.00';
+                const colorGanancia = gananciaTxt.includes('-') ? 'text-red-600 font-bold' : 'text-green-600 font-bold';
+
                 const tr = document.createElement('tr');
                 tr.className = "border-b border-gray-100 hover:bg-gray-50 transition";
                 tr.innerHTML = `
@@ -751,28 +860,26 @@
                     <td class="p-3"><span class="bg-gray-100 text-gray-700 py-1 px-2 rounded text-xs font-bold">${item.titular}</span></td>
                     <td class="p-3 text-right font-medium">$${parseFloat(item.monto).toFixed(2)}</td>
                     <td class="p-3 text-right font-bold text-green-600">${item.neto_usdt}</td>
+                    <td class="p-3 text-right ${colorGanancia}">${gananciaTxt}</td>
                 `;
                 tabla.appendChild(tr);
             });
         }
 
-        // Insertar Compra en Supabase
-        async function guardarCompraEnSupabase(banco, titular, monto, netoUsdt) {
+        async function guardarCompraEnSupabase(banco, titular, monto, netoUsdt, gananciaNeta = '₮ 0.00') {
             if (rolActual !== 'admin') return;
-
             const { data, error } = await supabaseClient
                 .from('compras_bancos')
-                .insert([{ banco, titular, monto: parseFloat(monto), neto_usdt: netoUsdt }]);
+                .insert([{ banco, titular, monto: parseFloat(monto), neto_usdt: netoUsdt, ganancia_neta: gananciaNeta }]);
 
             if (error) {
                 alert("Error guardando en Supabase: " + error.message);
             } else {
-                mostrarToast("Compra registrada en Supabase");
+                mostrarToast("Compra y ganancia registradas en Supabase");
                 cargarHistorialSupabase();
             }
         }
 
-        // Guardar Saldo Binance en Supabase
         document.getElementById('btn-guardar-saldo').addEventListener('click', async () => {
             if (rolActual !== 'admin') return alert('Solo el Admin puede guardar saldo.');
             const monto = parseFloat(document.getElementById('input-saldo-binance').value) || 0;
@@ -794,7 +901,6 @@
             }
         });
 
-        // Cargar último saldo registrado en Binance
         async function cargarSaldoBinanceSupabase() {
             const { data, error } = await supabaseClient
                 .from('saldo_binance')
@@ -811,12 +917,13 @@
             }
         }
 
-        // Listeners de Guardado por Banco
+        // Listener Guardar BDV (Con su ganancia neta calculada)
         document.getElementById('btn-save-bdv').addEventListener('click', function() {
             const monto = document.getElementById('input-bdv').value;
             const neto = document.getElementById('resultado-bdv').innerText;
+            const ganancia = document.getElementById('ganancia-res-bdv').innerText;
             const titular = document.getElementById('titular-bdv').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("BDV", titular, monto, neto);
+            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("BDV", titular, monto, neto, ganancia);
         });
 
         document.getElementById('btn-save-bt').addEventListener('click', function() {
@@ -838,6 +945,20 @@
             const neto = document.getElementById('resultado-bancamiga').innerText;
             const titular = document.getElementById('titular-bancamiga').value || 'Mi Cuenta Principal';
             if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("Bancamiga", titular, monto, neto);
+        });
+        
+        document.getElementById('btn-save-provincial').addEventListener('click', function() {
+            const monto = document.getElementById('input-provincial').value;
+            const neto = document.getElementById('resultado-provincial').innerText;
+            const titular = document.getElementById('titular-provincial').value || 'Mi Cuenta Principal';
+            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("Provincial", titular, monto, neto);
+        });
+        
+        document.getElementById('btn-save-banesco').addEventListener('click', function() {
+            const monto = document.getElementById('input-banesco').value;
+            const neto = document.getElementById('resultado-banesco').innerText;
+            const titular = document.getElementById('titular-banesco').value || 'Mi Cuenta Principal';
+            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("Banesco", titular, monto, neto);
         });
 
         document.getElementById('btn-save-plaza').addEventListener('click', function() {
