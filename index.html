@@ -32,9 +32,7 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans pb-16 md:pb-0">
 
-    <!-- ========================================== -->
-    <!-- PANTALLA DE LOGIN (BIENVENIDA)             -->
-    <!-- ========================================== -->
+    <!-- PANTALLA DE LOGIN -->
     <div id="login-layout" class="flex h-screen items-center justify-center px-4 bg-gradient-to-br from-blue-50 to-indigo-100 transition-opacity duration-500">
         <div class="bg-white p-8 md:p-10 rounded-3xl shadow-xl max-w-md w-full text-center border border-white">
             <div class="bg-blue-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 shadow-inner">
@@ -65,9 +63,7 @@
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- APLICACIÓN PRINCIPAL                       -->
-    <!-- ========================================== -->
+    <!-- APLICACIÓN PRINCIPAL -->
     <div id="app-layout" class="hidden h-screen w-full">
         <div class="flex h-screen overflow-hidden w-full">
 
@@ -83,7 +79,6 @@
                     <button id="btn-nav-calculadora" class="w-full flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition">
                         <i class="fa-solid fa-calculator w-6 text-left"></i> Calculadora
                     </button>
-                    <!-- NUEVO MÓDULO EN EL MENÚ -->
                     <button id="btn-nav-historial" class="w-full flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition">
                         <i class="fa-solid fa-clock-rotate-left w-6 text-left"></i> Historial
                     </button>
@@ -241,7 +236,6 @@
                         <h3 class="text-lg font-bold mb-4 border-b pb-2">Control de Operaciones y Acreditaciones</h3>
                         
                         <div class="space-y-3">
-                            
                             <!-- BDV -->
                             <div class="border border-gray-200 rounded-lg overflow-hidden">
                                 <button class="accordion-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 font-bold text-gray-700 transition outline-none">
@@ -249,14 +243,12 @@
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
-                                    
                                     <div class="mb-3">
                                         <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
                                             <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
                                         </button>
                                         <input type="text" id="titular-bdv" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. María Pérez">
                                     </div>
-
                                     <div class="flex flex-col md:flex-row gap-4 items-end">
                                         <div class="w-full md:w-1/2">
                                             <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
@@ -279,14 +271,12 @@
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
-                                    
                                     <div class="mb-3">
                                         <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
                                             <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
                                         </button>
                                         <input type="text" id="titular-bt" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. Juan López">
                                     </div>
-
                                     <div class="flex flex-col md:flex-row gap-4 items-end">
                                         <div class="w-full md:w-1/2">
                                             <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
@@ -309,14 +299,12 @@
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
-                                    
                                     <div class="mb-3">
                                         <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
                                             <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
                                         </button>
                                         <input type="text" id="titular-banplus" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. Empresa C.A.">
                                     </div>
-
                                     <div class="flex flex-col md:flex-row gap-4 items-end">
                                         <div class="w-full md:w-1/2">
                                             <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
@@ -339,14 +327,12 @@
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
-                                    
                                     <div class="mb-3">
                                         <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
                                             <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
                                         </button>
                                         <input type="text" id="titular-bancamiga" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. Ana Gómez">
                                     </div>
-
                                     <div class="flex flex-col md:flex-row gap-4 items-end">
                                         <div class="w-full md:w-1/2">
                                             <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
@@ -369,7 +355,6 @@
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-blue-200 bg-white">
-                                    
                                     <div class="mb-3">
                                         <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
                                             <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
@@ -410,17 +395,16 @@
                                     <button id="btn-save-plaza" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
 
-                <!-- VISTA 3: NUEVO MÓDULO DE HISTORIAL -->
+                <!-- VISTA 3: HISTORIAL -->
                 <div id="vista-historial" class="hidden">
                     <header class="flex flex-col md:flex-row md:justify-between md:items-center mb-8 mt-6 md:mt-0">
                         <div>
                             <h2 class="text-3xl font-bold">Historial de Compras</h2>
-                            <p class="text-gray-500 mt-1">Registro cronológico de operaciones y adquisición de divisas</p>
+                            <p class="text-gray-500 mt-1">Registro cronológico persistente en Supabase</p>
                         </div>
                     </header>
 
@@ -429,7 +413,7 @@
                             <table class="w-full text-left border-collapse min-w-max">
                                 <thead>
                                     <tr class="bg-gray-50 text-gray-600 text-xs uppercase tracking-wide border-b border-gray-200">
-                                        <th class="p-3 font-semibold">Fecha</th>
+                                        <th class="p-3 font-semibold">Fecha y Hora</th>
                                         <th class="p-3 font-semibold">Banco</th>
                                         <th class="p-3 font-semibold">Titular / Cuenta</th>
                                         <th class="p-3 font-semibold text-right">Inversión ($)</th>
@@ -438,7 +422,7 @@
                                 </thead>
                                 <tbody id="tabla-historial" class="text-sm text-gray-700 divide-y divide-gray-100">
                                     <tr id="historial-vacio">
-                                        <td colspan="5" class="text-center p-8 text-gray-400 italic">No hay operaciones registradas aún. Las compras guardadas aparecerán aquí.</td>
+                                        <td colspan="5" class="text-center p-8 text-gray-400 italic">Cargando datos desde la nube...</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -475,10 +459,10 @@
         </button>
     </div>
 
-    <!-- Notificación Flotante (Toast) -->
+    <!-- Toast Notification -->
     <div id="toast-success" class="fixed bottom-24 md:bottom-10 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 toast-notification z-50">
         <i class="fa-solid fa-circle-check text-green-400 text-xl"></i>
-        <span class="font-medium text-sm">Operación guardada en el historial</span>
+        <span id="toast-mensaje" class="font-medium text-sm">Operación guardada en Supabase</span>
     </div>
 
     <!-- Modal Transacción -->
@@ -500,22 +484,19 @@
                     <label class="block text-sm font-medium text-gray-700">Monto ($)</label>
                     <input type="number" id="monto" class="mt-1 block w-full rounded-md border-gray-300 p-2 border outline-none" required>
                 </div>
-                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Guardar (DB Admin)</button>
+                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Guardar</button>
             </form>
         </div>
     </div>
 
     <script>
         // ==========================================
-        // CONFIGURACIÓN SUPABASE (FASE 1)
+        // CONFIGURACIÓN SUPABASE REAL
         // ==========================================
         const supabaseUrl = 'https://oqrhfdwreucrqfsygouw.supabase.co';
         const supabaseKey = 'sb_publishable_V-wBTONCZKE09h2kAkbwZA_R-yKy8dH';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-        // ==========================================
-        // LÓGICA DE LOGIN Y SEGURIDAD ROLES
-        // ==========================================
         const CODIGO_SECRETO = "130503";
         let rolActual = null; 
 
@@ -567,6 +548,10 @@
             if (rol === 'admin') {
                 badge.innerText = "Perfil Admin";
                 badge.className = "absolute top-4 right-4 md:top-8 md:right-8 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-indigo-100 text-indigo-700 border border-indigo-200 z-10";
+                
+                // Cargar datos reales de la nube
+                cargarHistorialSupabase();
+                cargarSaldoBinanceSupabase();
             } else {
                 badge.innerText = "Modo Visitante (Sin Guardado)";
                 badge.className = "absolute top-4 right-4 md:top-8 md:right-8 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-gray-200 text-gray-600 border border-gray-300 z-10";
@@ -577,6 +562,8 @@
                     btn.innerText = "Solo Admin puede guardar";
                     btn.disabled = true;
                 });
+
+                document.getElementById('tabla-historial').innerHTML = `<tr id="historial-vacio"><td colspan="5" class="text-center p-8 text-gray-400 italic">El modo visitante no muestra el historial de compras personal.</td></tr>`;
             }
             obtenerTasasEnVivo();
         }
@@ -609,66 +596,38 @@
         });
 
         // ==========================================
-        // NAVEGACIÓN COMPUTADORA Y MÓVIL (3 VISTAS)
+        // NAVEGACIÓN COMPUTADORA Y MÓVIL
         // ==========================================
-        const vistas = { 
-            resumen: document.getElementById('vista-resumen'), 
-            calc: document.getElementById('vista-calculadora'),
-            historial: document.getElementById('vista-historial')
-        };
-        
+        const vistas = { resumen: document.getElementById('vista-resumen'), calc: document.getElementById('vista-calculadora'), historial: document.getElementById('vista-historial') };
         const nav = { 
-            btnDeskRes: document.getElementById('btn-nav-resumen'), 
-            btnDeskCalc: document.getElementById('btn-nav-calculadora'), 
-            btnDeskHist: document.getElementById('btn-nav-historial'),
-            btnMobRes: document.getElementById('btn-mob-resumen'), 
-            btnMobCalc: document.getElementById('btn-mob-calculadora'), 
-            btnMobHist: document.getElementById('btn-mob-historial'),
+            btnDeskRes: document.getElementById('btn-nav-resumen'), btnDeskCalc: document.getElementById('btn-nav-calculadora'), btnDeskHist: document.getElementById('btn-nav-historial'),
+            btnMobRes: document.getElementById('btn-mob-resumen'), btnMobCalc: document.getElementById('btn-mob-calculadora'), btnMobHist: document.getElementById('btn-mob-historial'),
             flotante: document.getElementById('btn-abrir-modal') 
         };
 
         function resetNavStyles() {
-            // Limpiar Escritorio
-            [nav.btnDeskRes, nav.btnDeskCalc, nav.btnDeskHist].forEach(b => {
-                b.classList.remove('bg-blue-50', 'text-blue-700');
-                b.classList.add('text-gray-600');
-            });
-            // Limpiar Móvil
-            [nav.btnMobRes, nav.btnMobCalc, nav.btnMobHist].forEach(b => {
-                b.classList.remove('text-blue-600', 'font-bold');
-                b.classList.add('text-gray-500', 'font-medium');
-            });
-            // Ocultar Vistas
+            [nav.btnDeskRes, nav.btnDeskCalc, nav.btnDeskHist].forEach(b => { b.classList.remove('bg-blue-50', 'text-blue-700'); b.classList.add('text-gray-600'); });
+            [nav.btnMobRes, nav.btnMobCalc, nav.btnMobHist].forEach(b => { b.classList.remove('text-blue-600', 'font-bold'); b.classList.add('text-gray-500', 'font-medium'); });
             Object.values(vistas).forEach(v => v.classList.add('hidden'));
         }
 
         function cambiarVista(target) {
             resetNavStyles();
-            
             if (target === 'calc') {
-                vistas.calc.classList.remove('hidden'); 
-                nav.flotante.classList.add('hidden');
-                nav.btnDeskCalc.classList.add('bg-blue-50', 'text-blue-700');
-                nav.btnMobCalc.classList.add('text-blue-600', 'font-bold');
+                vistas.calc.classList.remove('hidden'); nav.flotante.classList.add('hidden');
+                nav.btnDeskCalc.classList.add('bg-blue-50', 'text-blue-700'); nav.btnMobCalc.classList.add('text-blue-600', 'font-bold');
             } else if (target === 'historial') {
-                vistas.historial.classList.remove('hidden'); 
-                nav.flotante.classList.add('hidden');
-                nav.btnDeskHist.classList.add('bg-blue-50', 'text-blue-700');
-                nav.btnMobHist.classList.add('text-blue-600', 'font-bold');
+                vistas.historial.classList.remove('hidden'); nav.flotante.classList.add('hidden');
+                nav.btnDeskHist.classList.add('bg-blue-50', 'text-blue-700'); nav.btnMobHist.classList.add('text-blue-600', 'font-bold');
             } else {
-                vistas.resumen.classList.remove('hidden'); 
-                nav.flotante.classList.remove('hidden');
-                nav.btnDeskRes.classList.add('bg-blue-50', 'text-blue-700');
-                nav.btnMobRes.classList.add('text-blue-600', 'font-bold');
+                vistas.resumen.classList.remove('hidden'); nav.flotante.classList.remove('hidden');
+                nav.btnDeskRes.classList.add('bg-blue-50', 'text-blue-700'); nav.btnMobRes.classList.add('text-blue-600', 'font-bold');
             }
         }
 
-        nav.btnDeskCalc.addEventListener('click', () => cambiarVista('calc')); 
-        nav.btnMobCalc.addEventListener('click', () => cambiarVista('calc'));
-        nav.btnDeskRes.addEventListener('click', () => cambiarVista('resumen')); 
-        nav.btnMobRes.addEventListener('click', () => cambiarVista('resumen'));
-        nav.btnDeskHist.addEventListener('click', () => cambiarVista('historial')); 
-        nav.btnMobHist.addEventListener('click', () => cambiarVista('historial'));
+        nav.btnDeskCalc.addEventListener('click', () => cambiarVista('calc')); nav.btnMobCalc.addEventListener('click', () => cambiarVista('calc'));
+        nav.btnDeskRes.addEventListener('click', () => cambiarVista('resumen')); nav.btnMobRes.addEventListener('click', () => cambiarVista('resumen'));
+        nav.btnDeskHist.addEventListener('click', () => cambiarVista('historial')); nav.btnMobHist.addEventListener('click', () => cambiarVista('historial'));
 
         // ==========================================
         // TASAS EN VIVO Y PROFITS
@@ -753,72 +712,139 @@
         });
 
         // ==========================================
-        // GUARDADO EN HISTORIAL
+        // OPERACIONES SUPABASE (HISTORIAL Y SALDO)
         // ==========================================
-        function mostrarToast() {
+        function mostrarToast(msg = "Operación guardada en Supabase") {
             const toast = document.getElementById('toast-success');
+            document.getElementById('toast-mensaje').innerText = msg;
             toast.classList.add('toast-show');
             setTimeout(() => { toast.classList.remove('toast-show'); }, 3000);
         }
 
-        function agregarFilaHistorial(banco, titular, monto, netoUsdt) {
+        // Cargar Historial desde Supabase
+        async function cargarHistorialSupabase() {
             const tabla = document.getElementById('tabla-historial');
-            const trVacio = document.getElementById('historial-vacio');
-            if (trVacio) trVacio.remove();
+            const { data, error } = await supabaseClient
+                .from('compras_bancos')
+                .select('*')
+                .order('id', { ascending: false });
 
-            const fechaStr = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            
-            const tr = document.createElement('tr');
-            tr.className = "border-b border-gray-100 hover:bg-gray-50 transition";
-            tr.innerHTML = `
-                <td class="p-3 text-gray-500">${fechaStr}</td>
-                <td class="p-3 font-semibold text-blue-600">${banco}</td>
-                <td class="p-3"><span class="bg-gray-100 text-gray-700 py-1 px-2 rounded text-xs font-bold">${titular}</span></td>
-                <td class="p-3 text-right font-medium">$${parseFloat(monto).toFixed(2)}</td>
-                <td class="p-3 text-right font-bold text-green-600">${netoUsdt}</td>
-            `;
-            tabla.insertBefore(tr, tabla.firstChild);
-            mostrarToast();
+            if (error) {
+                console.error("Error al cargar historial:", error);
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                tabla.innerHTML = `<tr id="historial-vacio"><td colspan="5" class="text-center p-8 text-gray-400 italic">No hay operaciones registradas aún.</td></tr>`;
+                return;
+            }
+
+            tabla.innerHTML = '';
+            data.forEach(item => {
+                const f = new Date(item.created_at);
+                const fechaStr = f.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-gray-100 hover:bg-gray-50 transition";
+                tr.innerHTML = `
+                    <td class="p-3 text-gray-500">${fechaStr}</td>
+                    <td class="p-3 font-semibold text-blue-600">${item.banco}</td>
+                    <td class="p-3"><span class="bg-gray-100 text-gray-700 py-1 px-2 rounded text-xs font-bold">${item.titular}</span></td>
+                    <td class="p-3 text-right font-medium">$${parseFloat(item.monto).toFixed(2)}</td>
+                    <td class="p-3 text-right font-bold text-green-600">${item.neto_usdt}</td>
+                `;
+                tabla.appendChild(tr);
+            });
         }
 
-        document.getElementById('btn-save-bdv').addEventListener('click', function() {
+        // Insertar Compra en Supabase
+        async function guardarCompraEnSupabase(banco, titular, monto, netoUsdt) {
             if (rolActual !== 'admin') return;
+
+            const { data, error } = await supabaseClient
+                .from('compras_bancos')
+                .insert([{ banco, titular, monto: parseFloat(monto), neto_usdt: netoUsdt }]);
+
+            if (error) {
+                alert("Error guardando en Supabase: " + error.message);
+            } else {
+                mostrarToast("Compra registrada en Supabase");
+                cargarHistorialSupabase();
+            }
+        }
+
+        // Guardar Saldo Binance en Supabase
+        document.getElementById('btn-guardar-saldo').addEventListener('click', async () => {
+            if (rolActual !== 'admin') return alert('Solo el Admin puede guardar saldo.');
+            const monto = parseFloat(document.getElementById('input-saldo-binance').value) || 0;
+            if (monto <= 0) return alert('Ingresa un monto válido.');
+
+            const fechaActual = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }).replace(',', '');
+
+            const { data, error } = await supabaseClient
+                .from('saldo_binance')
+                .insert([{ monto, fecha_texto: fechaActual }]);
+
+            if (error) {
+                alert("Error guardando saldo: " + error.message);
+            } else {
+                document.getElementById('fecha-saldo-texto').innerText = fechaActual;
+                document.getElementById('monto-saldo-texto').innerText = "₮ " + monto.toFixed(2);
+                document.getElementById('texto-saldo-fecha').classList.remove('hidden');
+                mostrarToast("Saldo Binance actualizado en la nube");
+            }
+        });
+
+        // Cargar último saldo registrado en Binance
+        async function cargarSaldoBinanceSupabase() {
+            const { data, error } = await supabaseClient
+                .from('saldo_binance')
+                .select('*')
+                .order('id', { ascending: false })
+                .limit(1);
+
+            if (data && data.length > 0) {
+                const ultimo = data[0];
+                document.getElementById('input-saldo-binance').value = ultimo.monto;
+                document.getElementById('fecha-saldo-texto').innerText = ultimo.fecha_texto;
+                document.getElementById('monto-saldo-texto').innerText = "₮ " + parseFloat(ultimo.monto).toFixed(2);
+                document.getElementById('texto-saldo-fecha').classList.remove('hidden');
+            }
+        }
+
+        // Listeners de Guardado por Banco
+        document.getElementById('btn-save-bdv').addEventListener('click', function() {
             const monto = document.getElementById('input-bdv').value;
             const neto = document.getElementById('resultado-bdv').innerText;
             const titular = document.getElementById('titular-bdv').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") agregarFilaHistorial("BDV", titular, monto, neto);
+            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("BDV", titular, monto, neto);
         });
 
         document.getElementById('btn-save-bt').addEventListener('click', function() {
-            if (rolActual !== 'admin') return;
             const monto = document.getElementById('input-bt').value;
             const neto = document.getElementById('resultado-bt').innerText;
             const titular = document.getElementById('titular-bt').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") agregarFilaHistorial("BT (Tesoro)", titular, monto, neto);
+            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("BT (Tesoro)", titular, monto, neto);
         });
 
         document.getElementById('btn-save-banplus').addEventListener('click', function() {
-            if (rolActual !== 'admin') return;
             const monto = document.getElementById('input-banplus').value;
             const neto = document.getElementById('resultado-banplus').innerText;
             const titular = document.getElementById('titular-banplus').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") agregarFilaHistorial("Banplus", titular, monto, neto);
+            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("Banplus", titular, monto, neto);
         });
 
         document.getElementById('btn-save-bancamiga').addEventListener('click', function() {
-            if (rolActual !== 'admin') return;
             const monto = document.getElementById('input-bancamiga').value;
             const neto = document.getElementById('resultado-bancamiga').innerText;
             const titular = document.getElementById('titular-bancamiga').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") agregarFilaHistorial("Bancamiga", titular, monto, neto);
+            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("Bancamiga", titular, monto, neto);
         });
 
         document.getElementById('btn-save-plaza').addEventListener('click', function() {
-            if (rolActual !== 'admin') return;
             const monto = document.getElementById('input-plaza').value;
             const neto = document.getElementById('resultado-plaza').innerText;
             const titular = document.getElementById('titular-plaza').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") agregarFilaHistorial("Banco Plaza", titular, monto, neto);
+            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("Banco Plaza", titular, monto, neto);
         });
     </script>
 </body>
