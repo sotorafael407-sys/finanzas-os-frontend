@@ -7,259 +7,319 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- FAVICON DINÁMICO CON LA BILLETERA -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22 fill=%22%232563eb%22><path d=%22M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V192c0-35.3-28.7-64-64-64H80c-8.8 0-16-7.2-16-16s7.2-16 16-16H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H64zM416 336c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32z%22/></svg>">
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans pb-16 md:pb-0">
 
-    <div class="flex h-screen overflow-hidden">
-
-        <!-- Menú Lateral (Para Computadoras) -->
-        <aside class="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
-            <div class="p-6">
-                <h1 class="text-2xl font-bold text-blue-600"><i class="fa-solid fa-wallet mr-2"></i>Finanzas OS</h1>
-            </div>
-            <nav class="flex-1 px-4 space-y-2">
-                <button id="btn-nav-resumen" class="w-full flex items-center px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium transition">
-                    <i class="fa-solid fa-chart-pie w-6 text-left"></i> Resumen
-                </button>
-                <button id="btn-nav-calculadora" class="w-full flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition">
-                    <i class="fa-solid fa-calculator w-6 text-left"></i> Calculadora
-                </button>
-            </nav>
-        </aside>
-
-        <main class="flex-1 overflow-y-auto p-4 md:p-8 relative">
+    <!-- ========================================== -->
+    <!-- PANTALLA DE LOGIN (BIENVENIDA)             -->
+    <!-- ========================================== -->
+    <div id="login-layout" class="flex h-screen items-center justify-center px-4 bg-gradient-to-br from-blue-50 to-indigo-100 transition-opacity duration-500">
+        <div class="bg-white p-8 md:p-10 rounded-3xl shadow-xl max-w-md w-full text-center border border-white">
             
-            <!-- VISTA 1: RESUMEN -->
-            <div id="vista-resumen">
-                <header class="flex justify-between items-center mb-8">
-                    <h2 class="text-3xl font-bold">Mi Panel</h2>
-                    <div id="alerta-presupuesto" class="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm font-bold flex items-center shadow-sm hidden">
-                        <i class="fa-solid fa-triangle-exclamation mr-2"></i> Presupuesto Crítico
-                    </div>
-                </header>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-gray-500 text-sm font-medium mb-1">Balance Total</h3>
-                        <p id="texto-balance" class="text-3xl font-bold text-gray-800">$0.00</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-gray-500 text-sm font-medium mb-1">Ingresos del Mes</h3>
-                        <p id="texto-ingresos" class="text-2xl font-bold text-green-500">+$0.00</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                        <h3 class="text-gray-500 text-sm font-medium mb-1">Gastos del Mes</h3>
-                        <p id="texto-gastos" class="text-2xl font-bold text-red-500">-$0.00</p>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-64 flex items-center justify-center">
-                    <p class="text-gray-400">Aquí irá el gráfico de finanzas</p>
-                </div>
+            <div class="bg-blue-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 shadow-inner">
+                <i class="fa-solid fa-wallet text-4xl text-blue-600"></i>
             </div>
+            
+            <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Bienvenido</h1>
+            <p class="text-gray-500 mb-8 text-sm">Selecciona tu modo de acceso a Finanzas OS</p>
 
-            <!-- VISTA 2: CALCULADORA -->
-            <div id="vista-calculadora" class="hidden">
-                <header class="mb-8">
-                    <h2 class="text-3xl font-bold">Calculadora Operativa</h2>
-                    <p class="text-gray-500 mt-1">Gestión de compras, comisiones y tasas en tiempo real</p>
-                </header>
-
-                <!-- Tasas en Vivo -->
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-blue-100 flex items-center justify-between">
-                        <div>
-                            <h3 class="text-blue-500 text-sm font-bold uppercase mb-1">Oficial (BCV)</h3>
-                            <p id="tasa-bcv" class="text-3xl font-bold text-gray-800">...</p>
-                        </div>
-                        <i class="fa-solid fa-building-columns text-3xl text-blue-100"></i>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-purple-100 flex items-center justify-between">
-                        <div>
-                            <h3 class="text-purple-600 text-sm font-bold uppercase mb-1">Intervención (+0.5%)</h3>
-                            <p id="tasa-intervencion" class="text-3xl font-bold text-gray-800">...</p>
-                        </div>
-                        <i class="fa-solid fa-money-bill-transfer text-3xl text-purple-100"></i>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-green-100 flex items-center justify-between">
-                        <div>
-                            <h3 class="text-green-600 text-sm font-bold uppercase mb-1">Comprar (1000 USDT)</h3>
-                            <p id="tasa-usdt-compra" class="text-3xl font-bold text-gray-800">...</p>
-                        </div>
-                        <i class="fa-solid fa-arrow-down text-3xl text-green-100"></i>
-                    </div>
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-red-100 flex items-center justify-between">
-                        <div>
-                            <h3 class="text-red-600 text-sm font-bold uppercase mb-1">Vender (1000 USDT)</h3>
-                            <p id="tasa-usdt-venta" class="text-3xl font-bold text-gray-800">...</p>
-                        </div>
-                        <i class="fa-solid fa-arrow-up text-3xl text-red-100"></i>
-                    </div>
-                </div>
-
-                <!-- Saldo Binance -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border-2 border-yellow-400 mb-6">
-                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-2">
-                        <div class="flex items-center">
-                            <div class="bg-yellow-100 p-3 rounded-lg mr-4">
-                                <i class="fa-solid fa-coins text-2xl text-yellow-600"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-gray-800">Saldo en Binance</h3>
-                                <p class="text-sm text-gray-500">Capital disponible en USDT</p>
-                            </div>
-                        </div>
-                        <div class="w-full md:w-5/12 flex gap-2">
-                            <div class="relative flex-1">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 font-bold">₮</span>
-                                </div>
-                                <input type="number" id="input-saldo-binance" class="block w-full rounded-md border-gray-300 pl-8 p-3 border focus:border-yellow-500 outline-none text-xl font-bold text-gray-800" placeholder="0.00">
-                            </div>
-                            <button id="btn-guardar-saldo" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-4 rounded-md transition">
-                                Agregar
-                            </button>
-                        </div>
-                    </div>
-                    <div id="texto-saldo-fecha" class="text-right text-sm font-medium text-gray-600 hidden mt-2 border-t pt-2 border-gray-100">
-                        Tu saldo hoy <span id="fecha-saldo-texto" class="font-bold text-gray-800"></span> es <span id="monto-saldo-texto" class="font-bold text-green-600 text-lg ml-1">₮ 0.00</span>
-                    </div>
-                </div>
-
-                <!-- BOTÓN PARA DESPLEGAR CALCULADORA DE PROFITS -->
-                <button id="btn-toggle-profits" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-6 rounded-xl mb-6 shadow-sm flex items-center justify-center transition duration-200">
-                    <i class="fa-solid fa-chart-line mr-2 text-xl"></i> Abrir Calculadora de Profits
+            <!-- Botones Principales -->
+            <div id="login-buttons" class="space-y-4">
+                <button id="btn-select-admin" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl transition shadow-md flex items-center justify-center">
+                    <i class="fa-solid fa-user-shield mr-2 text-lg"></i> Entrar como Admin
                 </button>
-
-                <!-- PANEL CALCULADORA DE PROFITS -->
-                <div id="panel-profits" class="hidden bg-white p-6 rounded-xl shadow-sm border-2 border-indigo-200 mb-8 transition-all">
-                    <h3 class="text-lg font-bold text-indigo-700 mb-4 border-b pb-2">Simulador de Ciclo</h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Dólares a Comprar ($)</label>
-                            <input type="number" id="profit-usd" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50" placeholder="Ej. 100">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Tasa de Venta (USDT a Bs)</label>
-                            <input type="number" id="profit-tasa-venta" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50" placeholder="Cargando...">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Tasa Intervención (Bs)</label>
-                            <input type="number" id="profit-tasa-inter" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50" placeholder="Cargando...">
-                        </div>
-                    </div>
-
-                    <div class="bg-indigo-50 p-5 rounded-lg flex flex-col md:flex-row justify-between items-center border border-indigo-100 gap-4">
-                        <div class="text-center md:text-left w-full md:w-1/3 border-b md:border-b-0 md:border-r border-indigo-200 pb-4 md:pb-0 md:pr-4">
-                            <span class="text-sm font-semibold text-gray-600 block uppercase tracking-wide">Dólares Comprados:</span>
-                            <span id="profit-res-bruto" class="text-3xl font-bold text-gray-800">$ 0.00</span>
-                        </div>
-                        
-                        <div class="w-full md:w-2/3 flex flex-col gap-3">
-                            <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100">
-                                <span class="text-xs md:text-sm font-bold text-gray-600 uppercase tracking-wide">Ganancia Neta BDV / Tesoro</span>
-                                <span id="profit-res-neto-bdv" class="text-xl md:text-2xl font-bold text-gray-400">₮ 0.00</span>
-                            </div>
-                            <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100">
-                                <span class="text-xs md:text-sm font-bold text-gray-600 uppercase tracking-wide">Ganancia Neta Banplus</span>
-                                <span id="profit-res-neto-banplus" class="text-xl md:text-2xl font-bold text-gray-400">₮ 0.00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Panel de Bancos con Botones y Resultados por Comisiones -->
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <h3 class="text-lg font-bold mb-4 border-b pb-2">Control de Operaciones y Acreditaciones</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        
-                        <!-- BDV -->
-                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                            <label class="block text-sm font-bold text-gray-700 mb-1">BDV (Venezuela)</label>
-                            <input type="number" id="input-bdv" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3" placeholder="$0.00">
-                            <button id="btn-agregar-bdv" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-md text-sm transition mb-3">Agregar</button>
-                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
-                            <div id="resultado-bdv" class="text-lg font-bold text-green-600">₮ 0.00</div>
-                        </div>
-
-                        <!-- BT (Tesoro) -->
-                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                            <label class="block text-sm font-bold text-gray-700 mb-1">BT (Tesoro)</label>
-                            <input type="number" id="input-bt" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3" placeholder="$0.00">
-                            <button id="btn-agregar-bt" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-md text-sm transition mb-3">Agregar</button>
-                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
-                            <div id="resultado-bt" class="text-lg font-bold text-green-600">₮ 0.00</div>
-                        </div>
-
-                        <!-- PLAZA -->
-                        <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                            <label class="block text-sm font-bold text-gray-700 mb-2">Banco Plaza (7 días)</label>
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
-                            <input type="number" id="input-plaza" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3" placeholder="$0.00">
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Fecha de Compra</label>
-                            <input type="date" id="fecha-plaza" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3 text-sm text-gray-600">
-                            <label class="block text-xs font-semibold text-gray-600 mb-1">Plataforma</label>
-                            <select id="plataforma-plaza" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3 text-sm text-gray-600">
-                                <option value="bpay">BPAY (4.1% comisión)</option>
-                                <option value="deriv">DERIV (0% comisión)</option>
-                            </select>
-                            <button id="btn-agregar-plaza" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-md text-sm transition mb-3">Guardar y Calcular</button>
-                            <div class="bg-white p-3 rounded border border-gray-200">
-                                <div class="text-xs text-gray-500">Acreditación estimada:</div>
-                                <div id="fecha-acreditacion-plaza" class="text-sm font-bold text-blue-600 mb-2">--/--/----</div>
-                                <div class="text-xs text-gray-500">Neto USDT final:</div>
-                                <div id="resultado-plaza" class="text-lg font-bold text-green-600">₮ 0.00</div>
-                            </div>
-                        </div>
-
-                        <!-- BANCAMIGA -->
-                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Bancamiga</label>
-                            <input type="number" id="input-bancamiga" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3" placeholder="$0.00">
-                            <button id="btn-agregar-bancamiga" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-md text-sm transition mb-3">Agregar</button>
-                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
-                            <div id="resultado-bancamiga" class="text-lg font-bold text-green-600">₮ 0.00</div>
-                        </div>
-
-                        <!-- BANPLUS -->
-                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                            <label class="block text-sm font-bold text-gray-700 mb-1">Banplus</label>
-                            <input type="number" id="input-banplus" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3" placeholder="$0.00">
-                            <button id="btn-agregar-banplus" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-md text-sm transition mb-3">Agregar</button>
-                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
-                            <div id="resultado-banplus" class="text-lg font-bold text-green-600">₮ 0.00</div>
-                        </div>
-
-                        <!-- Banesco -->
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700">Banesco</label>
-                            <input type="number" class="mt-1 block w-full rounded-md border-gray-300 p-2 border outline-none" placeholder="$0.00">
-                        </div>
-
-                    </div>
-                </div>
+                <button id="btn-select-visitor" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3.5 px-4 rounded-xl transition flex items-center justify-center border border-gray-200">
+                    <i class="fa-regular fa-eye mr-2 text-lg"></i> Entrar como Visitante
+                </button>
             </div>
 
-            <!-- Botón Flotante -->
-            <button id="btn-abrir-modal" class="absolute bottom-20 md:bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-lg text-2xl flex items-center justify-center transition transform hover:scale-110 z-40">
-                <i class="fa-solid fa-plus"></i>
-            </button>
-
-        </main>
+            <!-- Formulario de Código Admin (Oculto al inicio) -->
+            <div id="login-password-section" class="hidden mt-2 text-left animate-fade-in">
+                <label class="block text-sm font-bold text-gray-700 mb-2 text-center">Ingresa tu código de seguridad</label>
+                <input type="password" id="admin-code" class="block w-full rounded-xl border-2 border-gray-200 p-3 focus:border-indigo-500 outline-none mb-2 text-center tracking-[0.5em] text-xl font-bold bg-gray-50" placeholder="••••••">
+                
+                <p id="login-error" class="text-red-500 text-sm font-bold mb-4 hidden text-center bg-red-50 py-2 rounded-lg"><i class="fa-solid fa-circle-exclamation mr-1"></i> Código inválido</p>
+                
+                <div class="flex gap-3 mt-4">
+                     <button id="btn-cancel-admin" class="w-1/3 bg-white border-2 border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-2.5 rounded-xl transition">Volver</button>
+                     <button id="btn-verify-admin" class="w-2/3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl transition shadow-md">Verificar</button>
+                </div>
+            </div>
+            
+        </div>
     </div>
 
-    <!-- NUEVO: Menú de Navegación Inferior (Solo visible en celulares) -->
-    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around p-2 z-50 shadow-lg">
-        <button id="btn-mob-resumen" class="flex flex-col items-center py-1 px-4 text-blue-600 font-bold">
+
+    <!-- ========================================== -->
+    <!-- APLICACIÓN PRINCIPAL (OCULTA AL INICIO)    -->
+    <!-- ========================================== -->
+    <div id="app-layout" class="hidden h-screen w-full">
+        <div class="flex h-screen overflow-hidden w-full">
+
+            <!-- Menú Lateral (Para Computadoras) -->
+            <aside class="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
+                <div class="p-6">
+                    <h1 class="text-2xl font-bold text-blue-600"><i class="fa-solid fa-wallet mr-2"></i>Finanzas OS</h1>
+                </div>
+                <nav class="flex-1 px-4 space-y-2">
+                    <button id="btn-nav-resumen" class="w-full flex items-center px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium transition">
+                        <i class="fa-solid fa-chart-pie w-6 text-left"></i> Resumen
+                    </button>
+                    <button id="btn-nav-calculadora" class="w-full flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition">
+                        <i class="fa-solid fa-calculator w-6 text-left"></i> Calculadora
+                    </button>
+                </nav>
+                
+                <!-- Botón de Cerrar Sesión en Escritorio -->
+                <div class="p-4 border-t border-gray-200">
+                    <button id="btn-logout-desktop" class="w-full flex items-center px-4 py-3 text-red-500 hover:bg-red-50 rounded-lg font-medium transition">
+                        <i class="fa-solid fa-arrow-right-from-bracket w-6 text-left"></i> Salir
+                    </button>
+                </div>
+            </aside>
+
+            <main class="flex-1 overflow-y-auto p-4 md:p-8 relative">
+                
+                <!-- Etiqueta de Rol Activo -->
+                <div id="badge-rol" class="absolute top-4 right-4 md:top-8 md:right-8 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
+                    <!-- Se llena con JS -->
+                </div>
+
+                <!-- VISTA 1: RESUMEN -->
+                <div id="vista-resumen">
+                    <header class="flex flex-col md:flex-row md:justify-between md:items-center mb-8 mt-6 md:mt-0">
+                        <h2 class="text-3xl font-bold">Mi Panel</h2>
+                        <div id="alerta-presupuesto" class="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm font-bold flex items-center shadow-sm hidden mt-4 md:mt-0">
+                            <i class="fa-solid fa-triangle-exclamation mr-2"></i> Presupuesto Crítico
+                        </div>
+                    </header>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                            <h3 class="text-gray-500 text-sm font-medium mb-1">Balance Total</h3>
+                            <p id="texto-balance" class="text-3xl font-bold text-gray-800">$0.00</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                            <h3 class="text-gray-500 text-sm font-medium mb-1">Ingresos del Mes</h3>
+                            <p id="texto-ingresos" class="text-2xl font-bold text-green-500">+$0.00</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                            <h3 class="text-gray-500 text-sm font-medium mb-1">Gastos del Mes</h3>
+                            <p id="texto-gastos" class="text-2xl font-bold text-red-500">-$0.00</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-64 flex items-center justify-center">
+                        <p class="text-gray-400">Aquí irá el gráfico de finanzas</p>
+                    </div>
+                </div>
+
+                <!-- VISTA 2: CALCULADORA -->
+                <div id="vista-calculadora" class="hidden">
+                    <header class="mb-8 mt-6 md:mt-0">
+                        <h2 class="text-3xl font-bold">Calculadora Operativa</h2>
+                        <p class="text-gray-500 mt-1">Gestión de compras, comisiones y tasas en tiempo real</p>
+                    </header>
+
+                    <!-- Tasas en Vivo -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-blue-100 flex items-center justify-between">
+                            <div>
+                                <h3 class="text-blue-500 text-sm font-bold uppercase mb-1">Oficial (BCV)</h3>
+                                <p id="tasa-bcv" class="text-3xl font-bold text-gray-800">...</p>
+                            </div>
+                            <i class="fa-solid fa-building-columns text-3xl text-blue-100"></i>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-purple-100 flex items-center justify-between">
+                            <div>
+                                <h3 class="text-purple-600 text-sm font-bold uppercase mb-1">Intervención (+0.5%)</h3>
+                                <p id="tasa-intervencion" class="text-3xl font-bold text-gray-800">...</p>
+                            </div>
+                            <i class="fa-solid fa-money-bill-transfer text-3xl text-purple-100"></i>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-green-100 flex items-center justify-between">
+                            <div>
+                                <h3 class="text-green-600 text-sm font-bold uppercase mb-1">Comprar (1000 USDT)</h3>
+                                <p id="tasa-usdt-compra" class="text-3xl font-bold text-gray-800">...</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-down text-3xl text-green-100"></i>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-red-100 flex items-center justify-between">
+                            <div>
+                                <h3 class="text-red-600 text-sm font-bold uppercase mb-1">Vender (1000 USDT)</h3>
+                                <p id="tasa-usdt-venta" class="text-3xl font-bold text-gray-800">...</p>
+                            </div>
+                            <i class="fa-solid fa-arrow-up text-3xl text-red-100"></i>
+                        </div>
+                    </div>
+
+                    <!-- Saldo Binance -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-2 border-yellow-400 mb-6">
+                        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-2">
+                            <div class="flex items-center">
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4">
+                                    <i class="fa-solid fa-coins text-2xl text-yellow-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">Saldo en Binance</h3>
+                                    <p class="text-sm text-gray-500">Capital disponible en USDT</p>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-5/12 flex gap-2">
+                                <div class="relative flex-1">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-gray-500 font-bold">₮</span>
+                                    </div>
+                                    <input type="number" id="input-saldo-binance" class="block w-full rounded-md border-gray-300 pl-8 p-3 border focus:border-yellow-500 outline-none text-xl font-bold text-gray-800" placeholder="0.00">
+                                </div>
+                                <button id="btn-guardar-saldo" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-4 rounded-md transition">
+                                    Agregar
+                                </button>
+                            </div>
+                        </div>
+                        <div id="texto-saldo-fecha" class="text-right text-sm font-medium text-gray-600 hidden mt-2 border-t pt-2 border-gray-100">
+                            Tu saldo hoy <span id="fecha-saldo-texto" class="font-bold text-gray-800"></span> es <span id="monto-saldo-texto" class="font-bold text-green-600 text-lg ml-1">₮ 0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- BOTÓN PARA DESPLEGAR CALCULADORA DE PROFITS -->
+                    <button id="btn-toggle-profits" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-6 rounded-xl mb-6 shadow-sm flex items-center justify-center transition duration-200">
+                        <i class="fa-solid fa-chart-line mr-2 text-xl"></i> Abrir Calculadora de Profits
+                    </button>
+
+                    <!-- PANEL CALCULADORA DE PROFITS -->
+                    <div id="panel-profits" class="hidden bg-white p-6 rounded-xl shadow-sm border-2 border-indigo-200 mb-8 transition-all">
+                        <h3 class="text-lg font-bold text-indigo-700 mb-4 border-b pb-2">Simulador de Ciclo</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Dólares a Comprar ($)</label>
+                                <input type="number" id="profit-usd" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50" placeholder="Ej. 100">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Tasa de Venta (USDT a Bs)</label>
+                                <input type="number" id="profit-tasa-venta" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50" placeholder="Cargando...">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Tasa Intervención (Bs)</label>
+                                <input type="number" id="profit-tasa-inter" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50" placeholder="Cargando...">
+                            </div>
+                        </div>
+
+                        <div class="bg-indigo-50 p-5 rounded-lg flex flex-col md:flex-row justify-between items-center border border-indigo-100 gap-4">
+                            <div class="text-center md:text-left w-full md:w-1/3 border-b md:border-b-0 md:border-r border-indigo-200 pb-4 md:pb-0 md:pr-4">
+                                <span class="text-sm font-semibold text-gray-600 block uppercase tracking-wide">Dólares Comprados:</span>
+                                <span id="profit-res-bruto" class="text-3xl font-bold text-gray-800">$ 0.00</span>
+                            </div>
+                            
+                            <div class="w-full md:w-2/3 flex flex-col gap-3">
+                                <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100">
+                                    <span class="text-xs md:text-sm font-bold text-gray-600 uppercase tracking-wide">Ganancia Neta BDV / Tesoro</span>
+                                    <span id="profit-res-neto-bdv" class="text-xl md:text-2xl font-bold text-gray-400">₮ 0.00</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100">
+                                    <span class="text-xs md:text-sm font-bold text-gray-600 uppercase tracking-wide">Ganancia Neta Banplus</span>
+                                    <span id="profit-res-neto-banplus" class="text-xl md:text-2xl font-bold text-gray-400">₮ 0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Panel de Bancos con Botones y Resultados por Comisiones -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <h3 class="text-lg font-bold mb-4 border-b pb-2">Control de Operaciones y Acreditaciones</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            
+                            <!-- BDV -->
+                            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <label class="block text-sm font-bold text-gray-700 mb-1">BDV (Venezuela)</label>
+                                <input type="number" id="input-bdv" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3" placeholder="$0.00">
+                                <button id="btn-agregar-bdv" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-md text-sm transition mb-3">Agregar</button>
+                                <div class="text-xs text-gray-500">Recibirías en USDT:</div>
+                                <div id="resultado-bdv" class="text-lg font-bold text-green-600">₮ 0.00</div>
+                            </div>
+
+                            <!-- BT (Tesoro) -->
+                            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <label class="block text-sm font-bold text-gray-700 mb-1">BT (Tesoro)</label>
+                                <input type="number" id="input-bt" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3" placeholder="$0.00">
+                                <button id="btn-agregar-bt" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-md text-sm transition mb-3">Agregar</button>
+                                <div class="text-xs text-gray-500">Recibirías en USDT:</div>
+                                <div id="resultado-bt" class="text-lg font-bold text-green-600">₮ 0.00</div>
+                            </div>
+
+                            <!-- PLAZA -->
+                            <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Banco Plaza (7 días)</label>
+                                <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
+                                <input type="number" id="input-plaza" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3" placeholder="$0.00">
+                                <label class="block text-xs font-semibold text-gray-600 mb-1">Fecha de Compra</label>
+                                <input type="date" id="fecha-plaza" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3 text-sm text-gray-600">
+                                <label class="block text-xs font-semibold text-gray-600 mb-1">Plataforma</label>
+                                <select id="plataforma-plaza" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3 text-sm text-gray-600">
+                                    <option value="bpay">BPAY (4.1% comisión)</option>
+                                    <option value="deriv">DERIV (0% comisión)</option>
+                                </select>
+                                <button id="btn-agregar-plaza" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-md text-sm transition mb-3">Guardar y Calcular</button>
+                                <div class="bg-white p-3 rounded border border-gray-200">
+                                    <div class="text-xs text-gray-500">Acreditación estimada:</div>
+                                    <div id="fecha-acreditacion-plaza" class="text-sm font-bold text-blue-600 mb-2">--/--/----</div>
+                                    <div class="text-xs text-gray-500">Neto USDT final:</div>
+                                    <div id="resultado-plaza" class="text-lg font-bold text-green-600">₮ 0.00</div>
+                                </div>
+                            </div>
+
+                            <!-- BANCAMIGA -->
+                            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Bancamiga</label>
+                                <input type="number" id="input-bancamiga" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3" placeholder="$0.00">
+                                <button id="btn-agregar-bancamiga" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-md text-sm transition mb-3">Agregar</button>
+                                <div class="text-xs text-gray-500">Recibirías en USDT:</div>
+                                <div id="resultado-bancamiga" class="text-lg font-bold text-green-600">₮ 0.00</div>
+                            </div>
+
+                            <!-- BANPLUS -->
+                            <div class="p-4 bg-gray-50 rounded-lg border border-gray-200">
+                                <label class="block text-sm font-bold text-gray-700 mb-1">Banplus</label>
+                                <input type="number" id="input-banplus" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none mb-3" placeholder="$0.00">
+                                <button id="btn-agregar-banplus" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-1.5 px-3 rounded-md text-sm transition mb-3">Agregar</button>
+                                <div class="text-xs text-gray-500">Recibirías en USDT:</div>
+                                <div id="resultado-banplus" class="text-lg font-bold text-green-600">₮ 0.00</div>
+                            </div>
+
+                            <!-- Banesco -->
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700">Banesco</label>
+                                <input type="number" class="mt-1 block w-full rounded-md border-gray-300 p-2 border outline-none" placeholder="$0.00">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botón Flotante -->
+                <button id="btn-abrir-modal" class="absolute bottom-20 md:bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-lg text-2xl flex items-center justify-center transition transform hover:scale-110 z-40">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+
+            </main>
+        </div>
+    </div> <!-- FIN APP LAYOUT -->
+
+    <!-- Menú de Navegación Inferior (Solo visible en celulares) -->
+    <div id="nav-movil" class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 hidden justify-around p-2 z-50 shadow-lg">
+        <button id="btn-mob-resumen" class="flex flex-col items-center py-1 px-4 text-blue-600 font-bold w-1/3">
             <i class="fa-solid fa-chart-pie text-xl mb-1"></i>
             <span class="text-xs">Resumen</span>
         </button>
-        <button id="btn-mob-calculadora" class="flex flex-col items-center py-1 px-4 text-gray-500 font-medium">
+        <button id="btn-mob-calculadora" class="flex flex-col items-center py-1 px-4 text-gray-500 font-medium w-1/3">
             <i class="fa-solid fa-calculator text-xl mb-1"></i>
             <span class="text-xs">Calculadora</span>
+        </button>
+        <button id="btn-logout-movil" class="flex flex-col items-center py-1 px-4 text-red-500 font-medium w-1/3">
+            <i class="fa-solid fa-arrow-right-from-bracket text-xl mb-1"></i>
+            <span class="text-xs">Salir</span>
         </button>
     </div>
 
@@ -287,8 +347,118 @@
         </div>
     </div>
 
+    <!-- CSS EXTRA PARA ANIMACIONES -->
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+
     <script>
-        // --- NAVEGACIÓN COMPUTADORA Y MÓVIL ---
+        // ==========================================
+        // LÓGICA DE LOGIN Y SESIÓN
+        // ==========================================
+        const loginLayout = document.getElementById('login-layout');
+        const appLayout = document.getElementById('app-layout');
+        const navMovil = document.getElementById('nav-movil');
+        
+        const btnSelectAdmin = document.getElementById('btn-select-admin');
+        const btnSelectVisitor = document.getElementById('btn-select-visitor');
+        const loginPasswordSection = document.getElementById('login-password-section');
+        const btnCancelAdmin = document.getElementById('btn-cancel-admin');
+        const btnVerifyAdmin = document.getElementById('btn-verify-admin');
+        const adminCodeInput = document.getElementById('admin-code');
+        const loginError = document.getElementById('login-error');
+        
+        const badgeRol = document.getElementById('badge-rol');
+        const CODIGO_SECRETO = "130503";
+        let rolActual = null; // 'admin' o 'visitante'
+
+        // 1. Verificación automática al abrir la página (Recordar dispositivo)
+        document.addEventListener("DOMContentLoaded", () => {
+            const dispositivoRecordado = localStorage.getItem('finanzas_os_auth');
+            if (dispositivoRecordado === 'admin') {
+                iniciarAplicacion('admin');
+            }
+        });
+
+        // 2. Acciones de los botones de login
+        btnSelectVisitor.addEventListener('click', () => {
+            iniciarAplicacion('visitante');
+        });
+
+        btnSelectAdmin.addEventListener('click', () => {
+            document.getElementById('login-buttons').classList.add('hidden');
+            loginPasswordSection.classList.remove('hidden');
+            adminCodeInput.focus();
+        });
+
+        btnCancelAdmin.addEventListener('click', () => {
+            loginPasswordSection.classList.add('hidden');
+            document.getElementById('login-buttons').classList.remove('hidden');
+            adminCodeInput.value = '';
+            loginError.classList.add('hidden');
+        });
+
+        btnVerifyAdmin.addEventListener('click', verificarCodigo);
+        adminCodeInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') verificarCodigo();
+        });
+
+        function verificarCodigo() {
+            if (adminCodeInput.value === CODIGO_SECRETO) {
+                // Guarda en la memoria del navegador que ya se validó como admin
+                localStorage.setItem('finanzas_os_auth', 'admin');
+                iniciarAplicacion('admin');
+            } else {
+                loginError.classList.remove('hidden');
+                adminCodeInput.value = '';
+                adminCodeInput.focus();
+            }
+        }
+
+        // 3. Función para arrancar la app según el rol
+        function iniciarAplicacion(rol) {
+            rolActual = rol;
+            
+            // Ocultar pantalla de login
+            loginLayout.classList.add('hidden');
+            loginLayout.classList.remove('flex');
+            
+            // Mostrar App
+            appLayout.classList.remove('hidden');
+            navMovil.classList.add('flex'); // Activa nav inferior en movil
+            navMovil.classList.remove('hidden');
+
+            // Personalizar interfaz según el rol
+            if (rol === 'admin') {
+                badgeRol.innerText = "Perfil Admin";
+                badgeRol.className = "absolute top-4 right-4 md:top-8 md:right-8 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-indigo-100 text-indigo-700 border border-indigo-200";
+            } else {
+                badgeRol.innerText = "Modo Visitante (Sin Guardado)";
+                badgeRol.className = "absolute top-4 right-4 md:top-8 md:right-8 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-gray-200 text-gray-600 border border-gray-300";
+            }
+            
+            // Inicia llamadas a API
+            obtenerTasasEnVivo();
+        }
+
+        // 4. Cerrar sesión
+        function cerrarSesion() {
+            localStorage.removeItem('finanzas_os_auth');
+            window.location.reload(); // Recarga la página para volver al login
+        }
+        document.getElementById('btn-logout-desktop').addEventListener('click', cerrarSesion);
+        document.getElementById('btn-logout-movil').addEventListener('click', cerrarSesion);
+
+
+        // ==========================================
+        // NAVEGACIÓN COMPUTADORA Y MÓVIL
+        // ==========================================
         const btnNavResumen = document.getElementById('btn-nav-resumen');
         const btnNavCalculadora = document.getElementById('btn-nav-calculadora');
         const btnMobResumen = document.getElementById('btn-mob-resumen');
@@ -303,13 +473,11 @@
             vistaResumen.classList.add('hidden');
             botonFlotante.classList.add('hidden');
             
-            // Estilos Escritorio
             btnNavCalculadora.classList.add('bg-blue-50', 'text-blue-700');
             btnNavCalculadora.classList.remove('text-gray-600');
             btnNavResumen.classList.remove('bg-blue-50', 'text-blue-700');
             btnNavResumen.classList.add('text-gray-600');
 
-            // Estilos Móvil
             btnMobCalculadora.classList.add('text-blue-600', 'font-bold');
             btnMobCalculadora.classList.remove('text-gray-500', 'font-medium');
             btnMobResumen.classList.remove('text-blue-600', 'font-bold');
@@ -321,13 +489,11 @@
             vistaCalculadora.classList.add('hidden');
             botonFlotante.classList.remove('hidden');
             
-            // Estilos Escritorio
             btnNavResumen.classList.add('bg-blue-50', 'text-blue-700');
             btnNavResumen.classList.remove('text-gray-600');
             btnNavCalculadora.classList.remove('bg-blue-50', 'text-blue-700');
             btnNavCalculadora.classList.add('text-gray-600');
 
-            // Estilos Móvil
             btnMobResumen.classList.add('text-blue-600', 'font-bold');
             btnMobResumen.classList.remove('text-gray-500', 'font-medium');
             btnMobCalculadora.classList.remove('text-blue-600', 'font-bold');
@@ -340,7 +506,9 @@
         btnNavResumen.addEventListener('click', cambiarAResumen);
         btnMobResumen.addEventListener('click', cambiarAResumen);
 
-        // --- TASAS EN VIVO ---
+        // ==========================================
+        // TASAS EN VIVO
+        // ==========================================
         let tasaUsdtCompraGlobal = 0; 
         let tasaIntervencionGlobal = 0;
 
@@ -375,21 +543,21 @@
             }
         }
         
-        obtenerTasasEnVivo();
+        // La carga de datos se llama ahora desde iniciarAplicacion()
 
-        // --- LÓGICA DE SALDO BINANCE ---
+        // ==========================================
+        // LÓGICA DE SALDO BINANCE Y PROFITS
+        // ==========================================
         document.getElementById('btn-guardar-saldo').addEventListener('click', function() {
             const saldo = parseFloat(document.getElementById('input-saldo-binance').value) || 0;
             const opcionesFecha = { weekday: 'long', day: 'numeric', month: 'long' };
-            let fechaActual = new Date().toLocaleDateString('es-ES', opcionesFecha);
-            fechaActual = fechaActual.replace(',', '');
+            let fechaActual = new Date().toLocaleDateString('es-ES', opcionesFecha).replace(',', '');
 
             document.getElementById('fecha-saldo-texto').innerText = fechaActual;
             document.getElementById('monto-saldo-texto').innerText = "₮ " + saldo.toFixed(2);
             document.getElementById('texto-saldo-fecha').classList.remove('hidden');
         });
 
-        // --- LÓGICA CALCULADORA DE PROFITS ---
         const btnToggleProfits = document.getElementById('btn-toggle-profits');
         const panelProfits = document.getElementById('panel-profits');
         
@@ -414,17 +582,14 @@
 
             if (usd > 0 && tasaVenta > 0 && tasaInter > 0) {
                 resBruto.innerText = "$ " + usd.toFixed(2);
-                
                 const costoBs = usd * tasaInter;
                 const inversionUsdt = costoBs / tasaVenta;
                 
-                // BDV / Tesoro
                 const usdtRecibidosBdv = (usd * (1 - 0.025)) * (1 - 0.041);
                 const gananciaBdv = usdtRecibidosBdv - inversionUsdt;
                 resNetoBdv.innerText = "₮ " + gananciaBdv.toFixed(2);
                 resNetoBdv.className = gananciaBdv >= 0 ? 'text-xl md:text-2xl font-bold text-green-600' : 'text-xl md:text-2xl font-bold text-red-600';
 
-                // Banplus
                 const usdtRecibidosBanplus = usd * (1 - 0.015);
                 const gananciaBanplus = usdtRecibidosBanplus - inversionUsdt;
                 resNetoBanplus.innerText = "₮ " + gananciaBanplus.toFixed(2);
@@ -443,7 +608,6 @@
             input.addEventListener('input', calcularProfitsAutomatica);
         });
 
-        // --- FUNCIONES DE CÁLCULO DE BANCOS ---
         function calcularNetoUsdt(inputId, resultadoId, descuentoTarjeta, descuentoBpay = 0.041) {
             const montoDolares = parseFloat(document.getElementById(inputId).value) || 0;
             if (montoDolares <= 0) {
@@ -490,7 +654,9 @@
             }
         });
 
-        // --- LÓGICA DEL MODAL ---
+        // ==========================================
+        // LÓGICA DEL MODAL (INGRESOS/GASTOS)
+        // ==========================================
         const modal = document.getElementById('modal-transaccion');
         const botonCerrar = document.getElementById('btn-cerrar-modal');
         const formulario = document.getElementById('formulario-transaccion');
@@ -507,6 +673,10 @@
 
         formulario.addEventListener('submit', function(evento) {
             evento.preventDefault();
+            
+            // Si es visitante, podríamos bloquear esta función en un futuro o advertirle.
+            // Por ahora, el requerimiento es simplemente que sus datos no persistan en recargas.
+            
             const tipo = document.getElementById('tipo').value;
             const monto = parseFloat(document.getElementById('monto').value); 
             
