@@ -10,51 +10,31 @@
     <!-- SUPABASE CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <!-- FAVICON DINÁMICO CON LA BILLETERA -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22 fill=%22%232563eb%22><path d=%22M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V192c0-35.3-28.7-64-64-64H80c-8.8 0-16-7.2-16-16s7.2-16 16-16H448c17.7 0 32-14.3 32-32s-14.3-32-32-32H64zM416 336c17.7 0 32-14.3 32-32s-14.3-32-32-32s-32 14.3-32 32s14.3 32 32 32z%22/></svg>">
 
     <style>
         .animate-fade-in { animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .toast-notification {
-            transition: transform 0.5s ease, opacity 0.5s ease;
-            transform: translateY(100%);
-            opacity: 0;
-        }
-        .toast-show {
-            transform: translateY(0);
-            opacity: 1;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .toast-notification { transition: transform 0.5s ease, opacity 0.5s ease; transform: translateY(100%); opacity: 0; }
+        .toast-show { transform: translateY(0); opacity: 1; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans pb-16 md:pb-0">
 
-    <!-- PANTALLA DE LOGIN -->
+    <!-- LOGIN -->
     <div id="login-layout" class="flex h-screen items-center justify-center px-4 bg-gradient-to-br from-blue-50 to-indigo-100 transition-opacity duration-500">
         <div class="bg-white p-8 md:p-10 rounded-3xl shadow-xl max-w-md w-full text-center border border-white">
-            <div class="bg-blue-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 shadow-inner">
-                <i class="fa-solid fa-wallet text-4xl text-blue-600"></i>
-            </div>
+            <div class="bg-blue-100 w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-6 shadow-inner"><i class="fa-solid fa-wallet text-4xl text-blue-600"></i></div>
             <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Bienvenido</h1>
             <p class="text-gray-500 mb-8 text-sm">Selecciona tu modo de acceso a Finanzas OS</p>
-
             <div id="login-buttons" class="space-y-4">
-                <button id="btn-select-admin" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl transition shadow-md flex items-center justify-center">
-                    <i class="fa-solid fa-user-shield mr-2 text-lg"></i> Entrar como Admin
-                </button>
-                <button id="btn-select-visitor" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3.5 px-4 rounded-xl transition flex items-center justify-center border border-gray-200">
-                    <i class="fa-regular fa-eye mr-2 text-lg"></i> Entrar como Visitante
-                </button>
+                <button id="btn-select-admin" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 px-4 rounded-xl transition shadow-md flex items-center justify-center"><i class="fa-solid fa-user-shield mr-2 text-lg"></i> Entrar como Admin</button>
+                <button id="btn-select-visitor" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3.5 px-4 rounded-xl transition flex items-center justify-center border border-gray-200"><i class="fa-regular fa-eye mr-2 text-lg"></i> Entrar como Visitante</button>
             </div>
-
             <div id="login-password-section" class="hidden mt-2 text-left animate-fade-in">
                 <label class="block text-sm font-bold text-gray-700 mb-2 text-center">Ingresa tu código de seguridad</label>
                 <input type="password" id="admin-code" class="block w-full rounded-xl border-2 border-gray-200 p-3 focus:border-indigo-500 outline-none mb-2 text-center tracking-[0.5em] text-xl font-bold bg-gray-50" placeholder="••••••">
                 <p id="login-error" class="text-red-500 text-sm font-bold mb-4 hidden text-center bg-red-50 py-2 rounded-lg"><i class="fa-solid fa-circle-exclamation mr-1"></i> Código inválido</p>
-                
                 <div class="flex gap-3 mt-4">
                      <button id="btn-cancel-admin" class="w-1/3 bg-white border-2 border-gray-200 hover:bg-gray-50 text-gray-700 font-bold py-2.5 rounded-xl transition">Volver</button>
                      <button id="btn-verify-admin" class="w-2/3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 rounded-xl transition shadow-md">Verificar</button>
@@ -63,43 +43,31 @@
         </div>
     </div>
 
-    <!-- APLICACIÓN PRINCIPAL -->
+    <!-- APP PRINCIPAL -->
     <div id="app-layout" class="hidden h-screen w-full">
         <div class="flex h-screen overflow-hidden w-full">
 
-            <!-- Menú Lateral -->
+            <!-- Sidebar -->
             <aside class="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
-                <div class="p-6">
-                    <h1 class="text-2xl font-bold text-blue-600"><i class="fa-solid fa-wallet mr-2"></i>Finanzas OS</h1>
-                </div>
+                <div class="p-6"><h1 class="text-2xl font-bold text-blue-600"><i class="fa-solid fa-wallet mr-2"></i>Finanzas OS</h1></div>
                 <nav class="flex-1 px-4 space-y-2">
-                    <button id="btn-nav-resumen" class="w-full flex items-center px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium transition">
-                        <i class="fa-solid fa-chart-pie w-6 text-left"></i> Resumen
-                    </button>
-                    <button id="btn-nav-calculadora" class="w-full flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition">
-                        <i class="fa-solid fa-calculator w-6 text-left"></i> Calculadora
-                    </button>
-                    <button id="btn-nav-historial" class="w-full flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition">
-                        <i class="fa-solid fa-clock-rotate-left w-6 text-left"></i> Historial
-                    </button>
+                    <button id="btn-nav-resumen" class="w-full flex items-center px-4 py-3 bg-blue-50 text-blue-700 rounded-lg font-medium transition"><i class="fa-solid fa-chart-pie w-6 text-left"></i> Resumen</button>
+                    <button id="btn-nav-calculadora" class="w-full flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition"><i class="fa-solid fa-calculator w-6 text-left"></i> Calculadora</button>
+                    <button id="btn-nav-historial" class="w-full flex items-center px-4 py-3 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition"><i class="fa-solid fa-clock-rotate-left w-6 text-left"></i> Historial</button>
                 </nav>
                 <div class="p-4 border-t border-gray-200">
-                    <button id="btn-logout-desktop" class="w-full flex items-center px-4 py-3 text-red-500 hover:bg-red-50 rounded-lg font-medium transition">
-                        <i class="fa-solid fa-arrow-right-from-bracket w-6 text-left"></i> Salir
-                    </button>
+                    <button id="btn-logout-desktop" class="w-full flex items-center px-4 py-3 text-red-500 hover:bg-red-50 rounded-lg font-medium transition"><i class="fa-solid fa-arrow-right-from-bracket w-6 text-left"></i> Salir</button>
                 </div>
             </aside>
 
             <main class="flex-1 overflow-y-auto p-4 md:p-8 relative">
-                
                 <div id="badge-rol" class="absolute top-4 right-4 md:top-8 md:right-8 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide z-10"></div>
 
-                <!-- VISTA 1: RESUMEN -->
+                <!-- VISTA: RESUMEN -->
                 <div id="vista-resumen">
                     <header class="flex flex-col md:flex-row md:justify-between md:items-center mb-8 mt-6 md:mt-0">
                         <h2 class="text-3xl font-bold">Mi Panel</h2>
                     </header>
-
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                             <h3 class="text-gray-500 text-sm font-medium mb-1">Balance Total</h3>
@@ -114,13 +82,9 @@
                             <p id="texto-gastos" class="text-2xl font-bold text-red-500">-$0.00</p>
                         </div>
                     </div>
-
-                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-64 flex items-center justify-center">
-                        <p class="text-gray-400">Aquí irá el gráfico de finanzas</p>
-                    </div>
                 </div>
 
-                <!-- VISTA 2: CALCULADORA -->
+                <!-- VISTA: CALCULADORA -->
                 <div id="vista-calculadora" class="hidden">
                     <header class="mb-8 mt-6 md:mt-0">
                         <h2 class="text-3xl font-bold">Calculadora Operativa</h2>
@@ -130,67 +94,60 @@
                     <!-- Tasas en Vivo -->
                     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-blue-100 flex items-center justify-between">
-                            <div>
-                                <h3 class="text-blue-500 text-sm font-bold uppercase mb-1">Oficial (BCV)</h3>
-                                <p id="tasa-bcv" class="text-3xl font-bold text-gray-800">...</p>
-                            </div>
+                            <div><h3 class="text-blue-500 text-sm font-bold uppercase mb-1">Oficial (BCV)</h3><p id="tasa-bcv" class="text-3xl font-bold text-gray-800">...</p></div>
                             <i class="fa-solid fa-building-columns text-3xl text-blue-100"></i>
                         </div>
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-purple-100 flex items-center justify-between">
-                            <div>
-                                <h3 class="text-purple-600 text-sm font-bold uppercase mb-1">Intervención (+0.5%)</h3>
-                                <p id="tasa-intervencion" class="text-3xl font-bold text-gray-800">...</p>
-                            </div>
+                            <div><h3 class="text-purple-600 text-sm font-bold uppercase mb-1">Intervención (+0.5%)</h3><p id="tasa-intervencion" class="text-3xl font-bold text-gray-800">...</p></div>
                             <i class="fa-solid fa-money-bill-transfer text-3xl text-purple-100"></i>
                         </div>
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-green-100 flex items-center justify-between">
-                            <div>
-                                <h3 class="text-green-600 text-sm font-bold uppercase mb-1">Comprar (USDT)</h3>
-                                <p id="tasa-usdt-compra" class="text-3xl font-bold text-gray-800">...</p>
-                            </div>
+                            <div><h3 class="text-green-600 text-sm font-bold uppercase mb-1">Comprar (USDT)</h3><p id="tasa-usdt-compra" class="text-3xl font-bold text-gray-800">...</p></div>
                             <i class="fa-solid fa-arrow-down text-3xl text-green-100"></i>
                         </div>
                         <div class="bg-white p-6 rounded-xl shadow-sm border border-red-100 flex items-center justify-between">
-                            <div>
-                                <h3 class="text-red-600 text-sm font-bold uppercase mb-1">Vender (USDT)</h3>
-                                <p id="tasa-usdt-venta" class="text-3xl font-bold text-gray-800">...</p>
-                            </div>
+                            <div><h3 class="text-red-600 text-sm font-bold uppercase mb-1">Vender (USDT)</h3><p id="tasa-usdt-venta" class="text-3xl font-bold text-gray-800">...</p></div>
                             <i class="fa-solid fa-arrow-up text-3xl text-red-100"></i>
                         </div>
                     </div>
 
-                    <!-- Saldo Binance -->
-                    <div class="bg-white p-6 rounded-xl shadow-sm border-2 border-yellow-400 mb-6">
-                        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-2">
+                    <!-- NUEVO PANEL: CAPITAL ESTRUCTURADO -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border-2 border-yellow-400 mb-6 relative">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                             <div class="flex items-center">
-                                <div class="bg-yellow-100 p-3 rounded-lg mr-4">
-                                    <i class="fa-solid fa-coins text-2xl text-yellow-600"></i>
-                                </div>
+                                <div class="bg-yellow-100 p-3 rounded-lg mr-4"><i class="fa-solid fa-vault text-2xl text-yellow-600"></i></div>
                                 <div>
-                                    <h3 class="text-lg font-bold text-gray-800">Saldo en Binance</h3>
-                                    <p class="text-sm text-gray-500">Capital disponible en USDT</p>
+                                    <h3 class="text-lg font-bold text-gray-800">Capital Estructurado</h3>
+                                    <p class="text-sm text-gray-500">Distribución de liquidez en bancos y Binance</p>
                                 </div>
                             </div>
-                            <div class="w-full md:w-5/12 flex gap-2">
-                                <div class="relative flex-1">
-                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                        <span class="text-gray-500 font-bold">₮</span>
-                                    </div>
-                                    <input type="number" id="input-saldo-binance" class="block w-full rounded-md border-gray-300 pl-8 p-3 border focus:border-yellow-500 outline-none text-xl font-bold text-gray-800" placeholder="0.00">
-                                </div>
-                                <button id="btn-guardar-saldo" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 px-4 rounded-md transition shadow-sm">
-                                    Guardar
-                                </button>
+                            <button id="btn-abrir-modal-capital" class="w-full md:w-auto bg-yellow-50 text-yellow-700 border border-yellow-200 hover:bg-yellow-100 font-bold py-2.5 px-5 rounded-lg transition flex items-center justify-center">
+                                <i class="fa-solid fa-sliders mr-2"></i> Ver / Editar Detalles
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-gray-50 p-5 rounded-xl border border-gray-100 mb-6">
+                            <div>
+                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wide">Total Dólares / USDT</span>
+                                <p id="resumen-total-usd" class="text-3xl font-bold text-green-600 mt-1">$ 0.00</p>
+                            </div>
+                            <div>
+                                <span class="text-xs font-bold text-gray-500 uppercase tracking-wide">Total Bolívares</span>
+                                <p id="resumen-total-bs" class="text-3xl font-bold text-blue-600 mt-1">Bs 0.00</p>
                             </div>
                         </div>
-                        <div id="texto-saldo-fecha" class="text-right text-sm font-medium text-gray-600 hidden mt-2 border-t pt-2 border-gray-100">
-                            Tu saldo hoy <span id="fecha-saldo-texto" class="font-bold text-gray-800"></span> es <span id="monto-saldo-texto" class="font-bold text-green-600 text-lg ml-1">₮ 0.00</span>
+
+                        <div class="border-t border-gray-100 pt-4">
+                            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">Desglose Rápido</h4>
+                            <div id="contenedor-resumen-lista" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                <div class="text-sm text-gray-400 italic">Cargando distribución...</div>
+                            </div>
                         </div>
                     </div>
 
                     <!-- BOTÓN CALCULADORA DE PROFITS -->
                     <button id="btn-toggle-profits" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-6 rounded-xl mb-6 shadow-sm flex items-center justify-center transition duration-200">
-                        <i class="fa-solid fa-chart-line mr-2 text-xl"></i> Abrir Calculadora de Profits
+                        <i class="fa-solid fa-chart-line mr-2 text-xl"></i> Abrir Simulador de Ciclo
                     </button>
 
                     <!-- PANEL CALCULADORA DE PROFITS -->
@@ -198,18 +155,9 @@
                         <h3 class="text-lg font-bold text-indigo-700 mb-4 border-b pb-2">Simulador de Ciclo</h3>
                         
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Dólares a Comprar ($)</label>
-                                <input type="number" id="profit-usd" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50" placeholder="Ej. 100">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Tasa de Venta (USDT a Bs)</label>
-                                <input type="number" id="profit-tasa-venta" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50" placeholder="Cargando...">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 mb-1">Tasa Intervención (Bs)</label>
-                                <input type="number" id="profit-tasa-inter" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50" placeholder="Cargando...">
-                            </div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-1">Dólares a Comprar ($)</label><input type="number" id="profit-usd" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50" placeholder="Ej. 100"></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-1">Tasa de Venta (USDT a Bs)</label><input type="number" id="profit-tasa-venta" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50"></div>
+                            <div><label class="block text-sm font-bold text-gray-700 mb-1">Tasa Intervención (Bs)</label><input type="number" id="profit-tasa-inter" class="input-calc block w-full rounded-md border-gray-300 p-3 border focus:border-indigo-500 outline-none bg-gray-50"></div>
                         </div>
 
                         <div class="bg-indigo-50 p-5 rounded-lg flex flex-col md:flex-row justify-between items-center border border-indigo-100 gap-4">
@@ -220,12 +168,8 @@
                             
                             <div class="w-full md:w-2/3 flex flex-col gap-3">
                                 <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100">
-                                    <span class="text-xs md:text-sm font-bold text-gray-600 uppercase tracking-wide">Ganancia Neta BDV / Tesoro</span>
+                                    <span class="text-xs md:text-sm font-bold text-gray-600 uppercase tracking-wide">Ganancia Neta Base (4.1% BPAY)</span>
                                     <span id="profit-res-neto-bdv" class="text-xl md:text-2xl font-bold text-gray-400">₮ 0.00</span>
-                                </div>
-                                <div class="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border border-gray-100">
-                                    <span class="text-xs md:text-sm font-bold text-gray-600 uppercase tracking-wide">Ganancia Neta Banplus (3.5%)</span>
-                                    <span id="profit-res-neto-banplus" class="text-xl md:text-2xl font-bold text-gray-400">₮ 0.00</span>
                                 </div>
                             </div>
                         </div>
@@ -236,210 +180,178 @@
                         <h3 class="text-lg font-bold mb-4 border-b pb-2">Control de Operaciones y Acreditaciones</h3>
                         
                         <div class="space-y-3">
-                            <!-- BDV (CON CÁLCULO DE GANANCIA Y TASAS) -->
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <!-- BDV -->
+                            <div class="border border-gray-200 rounded-lg overflow-hidden banco-section">
                                 <button class="accordion-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 font-bold text-gray-700 transition outline-none">
                                     <span><i class="fa-solid fa-building text-blue-600 mr-2"></i> BDV (Venezuela)</span>
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
-                                    
-                                    <!-- Titular y Tasas Específicas -->
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 bg-blue-50/50 p-3 rounded-lg border border-blue-100">
-                                        <div>
-                                            <label class="block text-xs font-bold text-gray-700 mb-1">Titular de la Cuenta</label>
-                                            <input type="text" id="titular-bdv" class="w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. María Pérez">
-                                        </div>
-                                        <div>
-                                            <label class="block text-xs font-bold text-gray-700 mb-1">Tasa Vendida (USDT)</label>
-                                            <input type="number" id="tasa-venta-bdv" class="input-calc-bdv w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. 38.50">
-                                        </div>
-                                        <div>
-                                            <label class="block text-xs font-bold text-gray-700 mb-1">Tasa Intervención</label>
-                                            <input type="number" id="tasa-inter-bdv" class="input-calc-bdv w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. 36.80">
-                                        </div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Titular</label><input type="text" class="input-titular w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. María Pérez"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Vendida (USDT)</label><input type="number" class="input-tasa-venta w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Intervención</label><input type="number" class="input-tasa-inter w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
                                     </div>
-
                                     <div class="flex flex-col md:flex-row gap-4 items-end mb-3">
-                                        <div class="w-full md:w-1/2">
-                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
-                                            <input type="number" id="input-bdv" class="input-calc-bdv block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
-                                        </div>
-                                        <button id="btn-calc-bdv" class="w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition">Calcular</button>
+                                        <div class="w-full md:w-1/2"><label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label><input type="number" class="input-monto block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00"></div>
+                                        <button class="btn-calc w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition" data-card="0.025" data-bpay="0.041">Calcular</button>
                                         <div class="w-full md:w-1/4 bg-gray-50 p-2 rounded text-center border">
-                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
-                                            <div id="resultado-bdv" class="font-bold text-green-600">₮ 0.00</div>
+                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div><div class="res-usdt font-bold text-green-600">₮ 0.00</div>
                                         </div>
                                     </div>
-
-                                    <!-- Resultado de Ganancia en vivo para BDV -->
                                     <div class="bg-green-50 p-3 rounded-lg border border-green-200 flex justify-between items-center mb-3">
-                                        <span class="text-xs font-bold text-green-800 uppercase tracking-wide">Ganancia Neta Estimada:</span>
-                                        <span id="ganancia-res-bdv" class="text-lg font-bold text-green-600">₮ 0.00</span>
+                                        <span class="text-xs font-bold text-green-800 uppercase tracking-wide">Ganancia Neta Estimada:</span><span class="res-ganancia text-lg font-bold text-gray-400">₮ 0.00</span>
                                     </div>
-
-                                    <button id="btn-save-bdv" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
+                                    <button class="btn-save w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition" data-banco="BDV" data-card="0.025" data-bpay="0.041"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
                                 </div>
                             </div>
 
                             <!-- BT (Tesoro) -->
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden banco-section">
                                 <button class="accordion-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 font-bold text-gray-700 transition outline-none">
                                     <span><i class="fa-solid fa-building text-blue-600 mr-2"></i> BT (Tesoro)</span>
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
-                                    <div class="mb-3">
-                                        <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
-                                            <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
-                                        </button>
-                                        <input type="text" id="titular-bt" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. Juan López">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 bg-blue-50/50 p-3 rounded-lg border border-blue-100">
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Titular</label><input type="text" class="input-titular w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. Juan López"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Vendida (USDT)</label><input type="number" class="input-tasa-venta w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Intervención</label><input type="number" class="input-tasa-inter w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
                                     </div>
-                                    <div class="flex flex-col md:flex-row gap-4 items-end">
-                                        <div class="w-full md:w-1/2">
-                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
-                                            <input type="number" id="input-bt" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
-                                        </div>
-                                        <button id="btn-calc-bt" class="w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition">Calcular</button>
+                                    <div class="flex flex-col md:flex-row gap-4 items-end mb-3">
+                                        <div class="w-full md:w-1/2"><label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label><input type="number" class="input-monto block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00"></div>
+                                        <button class="btn-calc w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition" data-card="0.025" data-bpay="0.041">Calcular</button>
                                         <div class="w-full md:w-1/4 bg-gray-50 p-2 rounded text-center border">
-                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
-                                            <div id="resultado-bt" class="font-bold text-green-600">₮ 0.00</div>
+                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div><div class="res-usdt font-bold text-green-600">₮ 0.00</div>
                                         </div>
                                     </div>
-                                    <button id="btn-save-bt" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
+                                    <div class="bg-green-50 p-3 rounded-lg border border-green-200 flex justify-between items-center mb-3">
+                                        <span class="text-xs font-bold text-green-800 uppercase tracking-wide">Ganancia Neta Estimada:</span><span class="res-ganancia text-lg font-bold text-gray-400">₮ 0.00</span>
+                                    </div>
+                                    <button class="btn-save w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition" data-banco="BT (Tesoro)" data-card="0.025" data-bpay="0.041"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
                                 </div>
                             </div>
 
                             <!-- BANPLUS -->
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden banco-section">
                                 <button class="accordion-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 font-bold text-gray-700 transition outline-none">
                                     <span><i class="fa-solid fa-building text-blue-600 mr-2"></i> Banplus (Comisión 3.5%)</span>
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
-                                    <div class="mb-3">
-                                        <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
-                                            <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
-                                        </button>
-                                        <input type="text" id="titular-banplus" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. Empresa C.A.">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 bg-blue-50/50 p-3 rounded-lg border border-blue-100">
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Titular</label><input type="text" class="input-titular w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. Empresa C.A."></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Vendida (USDT)</label><input type="number" class="input-tasa-venta w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Intervención</label><input type="number" class="input-tasa-inter w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
                                     </div>
-                                    <div class="flex flex-col md:flex-row gap-4 items-end">
-                                        <div class="w-full md:w-1/2">
-                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
-                                            <input type="number" id="input-banplus" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
-                                        </div>
-                                        <button id="btn-calc-banplus" class="w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition">Calcular</button>
+                                    <div class="flex flex-col md:flex-row gap-4 items-end mb-3">
+                                        <div class="w-full md:w-1/2"><label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label><input type="number" class="input-monto block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00"></div>
+                                        <button class="btn-calc w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition" data-card="0.035" data-bpay="0">Calcular</button>
                                         <div class="w-full md:w-1/4 bg-gray-50 p-2 rounded text-center border">
-                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
-                                            <div id="resultado-banplus" class="font-bold text-green-600">₮ 0.00</div>
+                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div><div class="res-usdt font-bold text-green-600">₮ 0.00</div>
                                         </div>
                                     </div>
-                                    <button id="btn-save-banplus" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
+                                    <div class="bg-green-50 p-3 rounded-lg border border-green-200 flex justify-between items-center mb-3">
+                                        <span class="text-xs font-bold text-green-800 uppercase tracking-wide">Ganancia Neta Estimada:</span><span class="res-ganancia text-lg font-bold text-gray-400">₮ 0.00</span>
+                                    </div>
+                                    <button class="btn-save w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition" data-banco="Banplus" data-card="0.035" data-bpay="0"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
                                 </div>
                             </div>
 
                             <!-- BANCAMIGA -->
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden banco-section">
                                 <button class="accordion-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 font-bold text-gray-700 transition outline-none">
                                     <span><i class="fa-solid fa-building text-blue-600 mr-2"></i> Bancamiga</span>
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
-                                    <div class="mb-3">
-                                        <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
-                                            <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
-                                        </button>
-                                        <input type="text" id="titular-bancamiga" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. Ana Gómez">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 bg-blue-50/50 p-3 rounded-lg border border-blue-100">
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Titular</label><input type="text" class="input-titular w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. Ana Gómez"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Vendida (USDT)</label><input type="number" class="input-tasa-venta w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Intervención</label><input type="number" class="input-tasa-inter w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
                                     </div>
-                                    <div class="flex flex-col md:flex-row gap-4 items-end">
-                                        <div class="w-full md:w-1/2">
-                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
-                                            <input type="number" id="input-bancamiga" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
-                                        </div>
-                                        <button id="btn-calc-bancamiga" class="w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition">Calcular</button>
+                                    <div class="flex flex-col md:flex-row gap-4 items-end mb-3">
+                                        <div class="w-full md:w-1/2"><label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label><input type="number" class="input-monto block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00"></div>
+                                        <button class="btn-calc w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition" data-card="0.048" data-bpay="0.041">Calcular</button>
                                         <div class="w-full md:w-1/4 bg-gray-50 p-2 rounded text-center border">
-                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
-                                            <div id="resultado-bancamiga" class="font-bold text-green-600">₮ 0.00</div>
+                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div><div class="res-usdt font-bold text-green-600">₮ 0.00</div>
                                         </div>
                                     </div>
-                                    <button id="btn-save-bancamiga" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
+                                    <div class="bg-green-50 p-3 rounded-lg border border-green-200 flex justify-between items-center mb-3">
+                                        <span class="text-xs font-bold text-green-800 uppercase tracking-wide">Ganancia Neta Estimada:</span><span class="res-ganancia text-lg font-bold text-gray-400">₮ 0.00</span>
+                                    </div>
+                                    <button class="btn-save w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition" data-banco="Bancamiga" data-card="0.048" data-bpay="0.041"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
                                 </div>
                             </div>
                             
                             <!-- PROVINCIAL -->
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden banco-section">
                                 <button class="accordion-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 font-bold text-gray-700 transition outline-none">
                                     <span><i class="fa-solid fa-building text-blue-600 mr-2"></i> BBVA Provincial</span>
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
-                                    <div class="mb-3">
-                                        <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
-                                            <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
-                                        </button>
-                                        <input type="text" id="titular-provincial" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. Pedro Pérez">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 bg-blue-50/50 p-3 rounded-lg border border-blue-100">
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Titular</label><input type="text" class="input-titular w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. Pedro Pérez"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Vendida (USDT)</label><input type="number" class="input-tasa-venta w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Intervención</label><input type="number" class="input-tasa-inter w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
                                     </div>
-                                    <div class="flex flex-col md:flex-row gap-4 items-end">
-                                        <div class="w-full md:w-1/2">
-                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
-                                            <input type="number" id="input-provincial" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
-                                        </div>
-                                        <button id="btn-calc-provincial" class="w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition">Calcular</button>
+                                    <div class="flex flex-col md:flex-row gap-4 items-end mb-3">
+                                        <div class="w-full md:w-1/2"><label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label><input type="number" class="input-monto block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00"></div>
+                                        <button class="btn-calc w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition" data-card="0" data-bpay="0.041">Calcular</button>
                                         <div class="w-full md:w-1/4 bg-gray-50 p-2 rounded text-center border">
-                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
-                                            <div id="resultado-provincial" class="font-bold text-green-600">₮ 0.00</div>
+                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div><div class="res-usdt font-bold text-green-600">₮ 0.00</div>
                                         </div>
                                     </div>
-                                    <button id="btn-save-provincial" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
+                                    <div class="bg-green-50 p-3 rounded-lg border border-green-200 flex justify-between items-center mb-3">
+                                        <span class="text-xs font-bold text-green-800 uppercase tracking-wide">Ganancia Neta Estimada:</span><span class="res-ganancia text-lg font-bold text-gray-400">₮ 0.00</span>
+                                    </div>
+                                    <button class="btn-save w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition" data-banco="Provincial" data-card="0" data-bpay="0.041"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
                                 </div>
                             </div>
                             
                             <!-- BANESCO -->
-                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                            <div class="border border-gray-200 rounded-lg overflow-hidden banco-section">
                                 <button class="accordion-btn w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 font-bold text-gray-700 transition outline-none">
                                     <span><i class="fa-solid fa-building text-blue-600 mr-2"></i> Banesco</span>
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-gray-200 bg-white">
-                                    <div class="mb-3">
-                                        <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
-                                            <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
-                                        </button>
-                                        <input type="text" id="titular-banesco" class="hidden w-full md:w-1/2 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. Luis Silva">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 bg-blue-50/50 p-3 rounded-lg border border-blue-100">
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Titular</label><input type="text" class="input-titular w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. Luis Silva"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Vendida (USDT)</label><input type="number" class="input-tasa-venta w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Intervención</label><input type="number" class="input-tasa-inter w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
                                     </div>
-                                    <div class="flex flex-col md:flex-row gap-4 items-end">
-                                        <div class="w-full md:w-1/2">
-                                            <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
-                                            <input type="number" id="input-banesco" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
-                                        </div>
-                                        <button id="btn-calc-banesco" class="w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition">Calcular</button>
+                                    <div class="flex flex-col md:flex-row gap-4 items-end mb-3">
+                                        <div class="w-full md:w-1/2"><label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label><input type="number" class="input-monto block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00"></div>
+                                        <button class="btn-calc w-full md:w-1/4 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-md transition" data-card="0" data-bpay="0.041">Calcular</button>
                                         <div class="w-full md:w-1/4 bg-gray-50 p-2 rounded text-center border">
-                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div>
-                                            <div id="resultado-banesco" class="font-bold text-green-600">₮ 0.00</div>
+                                            <div class="text-xs text-gray-500">Recibirías en USDT:</div><div class="res-usdt font-bold text-green-600">₮ 0.00</div>
                                         </div>
                                     </div>
-                                    <button id="btn-save-banesco" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
+                                    <div class="bg-green-50 p-3 rounded-lg border border-green-200 flex justify-between items-center mb-3">
+                                        <span class="text-xs font-bold text-green-800 uppercase tracking-wide">Ganancia Neta Estimada:</span><span class="res-ganancia text-lg font-bold text-gray-400">₮ 0.00</span>
+                                    </div>
+                                    <button class="btn-save w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition" data-banco="Banesco" data-card="0" data-bpay="0.041"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
                                 </div>
                             </div>
 
-                            <!-- PLAZA -->
-                            <div class="border border-blue-200 rounded-lg overflow-hidden shadow-sm">
+                            <!-- PLAZA (LÓGICA ESPECIAL) -->
+                            <div class="border border-blue-200 rounded-lg overflow-hidden shadow-sm banco-section" id="section-plaza">
                                 <button class="accordion-btn w-full flex justify-between items-center p-4 bg-blue-50 hover:bg-blue-100 font-bold text-blue-800 transition outline-none">
                                     <span><i class="fa-solid fa-clock text-blue-600 mr-2"></i> Banco Plaza (Acreditación 7 Días)</span>
                                     <i class="fa-solid fa-chevron-down transition-transform duration-300"></i>
                                 </button>
                                 <div class="accordion-content hidden p-4 border-t border-blue-200 bg-white">
-                                    <div class="mb-3">
-                                        <button class="text-blue-600 text-xs font-bold mb-2 flex items-center hover:text-blue-800 transition btn-toggle-titular" type="button">
-                                            <i class="fa-solid fa-plus mr-1"></i> Añadir cuenta / titular
-                                        </button>
-                                        <input type="text" id="titular-plaza" class="hidden w-full md:w-1/3 rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-blue-50" placeholder="Ej. Carlos Ruiz">
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4 bg-blue-50/50 p-3 rounded-lg border border-blue-100">
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Titular</label><input type="text" class="input-titular w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white" placeholder="Ej. Carlos Ruiz"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Vendida (USDT)</label><input type="number" class="input-tasa-venta w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
+                                        <div><label class="block text-xs font-bold text-gray-700 mb-1">Tasa Intervención</label><input type="number" class="input-tasa-inter w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm bg-white"></div>
                                     </div>
-
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                         <div>
                                             <label class="block text-xs font-semibold text-gray-600 mb-1">Monto en $</label>
-                                            <input type="number" id="input-plaza" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
+                                            <input type="number" class="input-monto block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none" placeholder="$0.00">
                                         </div>
                                         <div>
                                             <label class="block text-xs font-semibold text-gray-600 mb-1">Fecha de Compra</label>
@@ -448,32 +360,29 @@
                                         <div>
                                             <label class="block text-xs font-semibold text-gray-600 mb-1">Plataforma</label>
                                             <select id="plataforma-plaza" class="block w-full rounded-md border-gray-300 p-2 border focus:border-blue-500 outline-none text-sm text-gray-600">
-                                                <option value="bpay">BPAY (4.1% comisión)</option>
-                                                <option value="deriv">DERIV (0% comisión)</option>
+                                                <option value="0.041">BPAY (4.1% comisión)</option>
+                                                <option value="0">DERIV (0% comisión)</option>
                                             </select>
                                         </div>
                                     </div>
                                     
                                     <button id="btn-calc-plaza" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded-md text-sm transition mb-3">Simular Acreditación y Calcular</button>
                                     
-                                    <div class="bg-gray-50 p-4 rounded border border-gray-200 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-2">
-                                        <div>
-                                            <div class="text-xs text-gray-500">Acreditación estimada:</div>
-                                            <div id="fecha-acreditacion-plaza" class="text-sm font-bold text-blue-600">--/--/----</div>
-                                        </div>
-                                        <div class="md:text-right">
-                                            <div class="text-xs text-gray-500">Neto USDT final:</div>
-                                            <div id="resultado-plaza" class="text-xl font-bold text-green-600">₮ 0.00</div>
-                                        </div>
+                                    <div class="bg-gray-50 p-4 rounded border border-gray-200 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-2 mb-3">
+                                        <div><div class="text-xs text-gray-500">Acreditación estimada:</div><div id="fecha-acreditacion-plaza" class="text-sm font-bold text-blue-600">--/--/----</div></div>
+                                        <div class="md:text-right"><div class="text-xs text-gray-500">Neto USDT final:</div><div class="res-usdt text-xl font-bold text-green-600">₮ 0.00</div></div>
                                     </div>
-                                    <button id="btn-save-plaza" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition btn-db-save"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
+                                    <div class="bg-green-50 p-3 rounded-lg border border-green-200 flex justify-between items-center mb-3">
+                                        <span class="text-xs font-bold text-green-800 uppercase tracking-wide">Ganancia Neta Estimada:</span><span class="res-ganancia text-lg font-bold text-gray-400">₮ 0.00</span>
+                                    </div>
+                                    <button id="btn-save-plaza" class="w-full mt-3 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 rounded-md text-sm transition"><i class="fa-solid fa-cloud-arrow-up mr-2"></i>Guardar en Base de Datos</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- VISTA 3: HISTORIAL (CON COLUMNA DE GANANCIA) -->
+                <!-- VISTA 3: HISTORIAL -->
                 <div id="vista-historial" class="hidden">
                     <header class="flex flex-col md:flex-row md:justify-between md:items-center mb-8 mt-6 md:mt-0">
                         <div>
@@ -496,19 +405,12 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tabla-historial" class="text-sm text-gray-700 divide-y divide-gray-100">
-                                    <tr id="historial-vacio">
-                                        <td colspan="6" class="text-center p-8 text-gray-400 italic">Cargando datos desde la nube...</td>
-                                    </tr>
+                                    <tr id="historial-vacio"><td colspan="6" class="text-center p-8 text-gray-400 italic">Cargando datos desde la nube...</td></tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
-                <!-- Botón Flotante -->
-                <button id="btn-abrir-modal" class="absolute bottom-20 md:bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-lg text-2xl flex items-center justify-center transition transform hover:scale-110 z-40">
-                    <i class="fa-solid fa-plus"></i>
-                </button>
 
             </main>
         </div>
@@ -516,22 +418,10 @@
 
     <!-- Menú Inferior Móvil -->
     <div id="nav-movil" class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 hidden justify-around p-2 z-50 shadow-lg">
-        <button id="btn-mob-resumen" class="flex flex-col items-center py-1 px-2 text-blue-600 font-bold w-1/4">
-            <i class="fa-solid fa-chart-pie text-xl mb-1"></i>
-            <span class="text-[10px]">Resumen</span>
-        </button>
-        <button id="btn-mob-calculadora" class="flex flex-col items-center py-1 px-2 text-gray-500 font-medium w-1/4">
-            <i class="fa-solid fa-calculator text-xl mb-1"></i>
-            <span class="text-[10px]">Calculadora</span>
-        </button>
-        <button id="btn-mob-historial" class="flex flex-col items-center py-1 px-2 text-gray-500 font-medium w-1/4">
-            <i class="fa-solid fa-clock-rotate-left text-xl mb-1"></i>
-            <span class="text-[10px]">Historial</span>
-        </button>
-        <button id="btn-logout-movil" class="flex flex-col items-center py-1 px-2 text-red-500 font-medium w-1/4">
-            <i class="fa-solid fa-arrow-right-from-bracket text-xl mb-1"></i>
-            <span class="text-[10px]">Salir</span>
-        </button>
+        <button id="btn-mob-resumen" class="flex flex-col items-center py-1 px-2 text-blue-600 font-bold w-1/4"><i class="fa-solid fa-chart-pie text-xl mb-1"></i><span class="text-[10px]">Resumen</span></button>
+        <button id="btn-mob-calculadora" class="flex flex-col items-center py-1 px-2 text-gray-500 font-medium w-1/4"><i class="fa-solid fa-calculator text-xl mb-1"></i><span class="text-[10px]">Calculadora</span></button>
+        <button id="btn-mob-historial" class="flex flex-col items-center py-1 px-2 text-gray-500 font-medium w-1/4"><i class="fa-solid fa-clock-rotate-left text-xl mb-1"></i><span class="text-[10px]">Historial</span></button>
+        <button id="btn-logout-movil" class="flex flex-col items-center py-1 px-2 text-red-500 font-medium w-1/4"><i class="fa-solid fa-arrow-right-from-bracket text-xl mb-1"></i><span class="text-[10px]">Salir</span></button>
     </div>
 
     <!-- Toast Notification -->
@@ -540,27 +430,38 @@
         <span id="toast-mensaje" class="font-medium text-sm">Operación guardada en Supabase</span>
     </div>
 
-    <!-- Modal Transacción -->
-    <div id="modal-transaccion" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
-        <div class="bg-white rounded-xl shadow-lg w-11/12 md:w-1/3 p-6">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold">Nueva Transacción</h3>
-                <button id="btn-cerrar-modal" class="text-gray-400 hover:text-red-500 text-2xl font-bold">&times;</button>
+    <!-- MODAL: GESTOR DE CAPITAL -->
+    <div id="modal-capital" class="fixed inset-0 bg-black bg-opacity-60 hidden flex items-center justify-center z-[60] p-4">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col animate-fade-in">
+            
+            <div class="flex justify-between items-center p-6 border-b border-gray-100">
+                <h3 class="text-xl font-bold text-gray-800"><i class="fa-solid fa-pen-to-square mr-2 text-yellow-500"></i>Estructura de Capital</h3>
+                <button id="btn-cerrar-modal-capital" class="text-gray-400 hover:text-red-500 text-2xl font-bold transition">&times;</button>
             </div>
-            <form id="formulario-transaccion" class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Tipo</label>
-                    <select id="tipo" class="mt-1 block w-full rounded-md border-gray-300 p-2 border outline-none">
-                        <option value="ingreso">Ingreso</option>
-                        <option value="gasto">Gasto</option>
-                    </select>
+            
+            <div class="overflow-y-auto flex-1 p-6 bg-gray-50">
+                <!-- Encabezados Desktop -->
+                <div class="hidden md:grid grid-cols-12 gap-3 mb-2 px-2">
+                    <div class="col-span-3 text-xs font-bold text-gray-500 uppercase">Banco / Plataforma</div>
+                    <div class="col-span-3 text-xs font-bold text-gray-500 uppercase">Titular</div>
+                    <div class="col-span-2 text-xs font-bold text-gray-500 uppercase text-right">Bolívares (Bs)</div>
+                    <div class="col-span-3 text-xs font-bold text-gray-500 uppercase text-right">Dólares (USD/USDT)</div>
+                    <div class="col-span-1"></div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Monto ($)</label>
-                    <input type="number" id="monto" class="mt-1 block w-full rounded-md border-gray-300 p-2 border outline-none" required>
+                <div id="contenedor-filas-capital" class="space-y-4 md:space-y-2">
+                    <!-- Se llena con JS -->
                 </div>
-                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-2 px-4 rounded-lg">Guardar</button>
-            </form>
+                <button id="btn-add-fila-capital" class="w-full mt-4 border-2 border-dashed border-gray-300 text-gray-500 hover:bg-white hover:text-blue-600 hover:border-blue-300 font-bold py-4 rounded-xl transition flex items-center justify-center">
+                    <i class="fa-solid fa-plus mr-2"></i> Añadir Nueva Cuenta
+                </button>
+            </div>
+            
+            <div class="p-6 border-t border-gray-100 bg-white flex justify-end gap-3 rounded-b-2xl">
+                <button id="btn-cancelar-capital" class="px-6 py-2.5 bg-gray-100 text-gray-700 font-bold rounded-lg hover:bg-gray-200 transition">Cancelar</button>
+                <button id="btn-guardar-capital" class="px-6 py-2.5 bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded-lg shadow-md transition flex items-center">
+                    <i class="fa-solid fa-floppy-disk mr-2"></i>Guardar Distribución
+                </button>
+            </div>
         </div>
     </div>
 
@@ -574,30 +475,20 @@
 
         const CODIGO_SECRETO = "130503";
         let rolActual = null; 
+        
+        // Estado local del capital
+        let estructuraCapital = [];
 
         document.addEventListener("DOMContentLoaded", () => {
             const auth = localStorage.getItem('finanzas_os_auth');
             if (auth === 'admin') iniciarAplicacion('admin');
         });
 
-        document.getElementById('btn-select-visitor').addEventListener('click', () => iniciarAplicacion('visitante'));
-
-        document.getElementById('btn-select-admin').addEventListener('click', () => {
-            document.getElementById('login-buttons').classList.add('hidden');
-            document.getElementById('login-password-section').classList.remove('hidden');
-            document.getElementById('admin-code').focus();
-        });
-
-        document.getElementById('btn-cancel-admin').addEventListener('click', () => {
-            document.getElementById('login-password-section').classList.add('hidden');
-            document.getElementById('login-buttons').classList.remove('hidden');
-            document.getElementById('login-error').classList.add('hidden');
-        });
-
-        document.getElementById('btn-verify-admin').addEventListener('click', verificarCodigo);
-        document.getElementById('admin-code').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') verificarCodigo();
-        });
+        document.getElementById('btn-select-visitor')?.addEventListener('click', () => iniciarAplicacion('visitante'));
+        document.getElementById('btn-select-admin')?.addEventListener('click', () => { document.getElementById('login-buttons').classList.add('hidden'); document.getElementById('login-password-section').classList.remove('hidden'); document.getElementById('admin-code').focus(); });
+        document.getElementById('btn-cancel-admin')?.addEventListener('click', () => { document.getElementById('login-password-section').classList.add('hidden'); document.getElementById('login-buttons').classList.remove('hidden'); document.getElementById('login-error').classList.add('hidden'); });
+        document.getElementById('btn-verify-admin')?.addEventListener('click', verificarCodigo);
+        document.getElementById('admin-code')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') verificarCodigo(); });
 
         function verificarCodigo() {
             const input = document.getElementById('admin-code');
@@ -618,39 +509,68 @@
             document.getElementById('nav-movil').classList.add('flex', 'md:hidden');
 
             const badge = document.getElementById('badge-rol');
-            const botonesDB = document.querySelectorAll('.btn-db-save');
-
             if (rol === 'admin') {
                 badge.innerText = "Perfil Admin";
                 badge.className = "absolute top-4 right-4 md:top-8 md:right-8 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-indigo-100 text-indigo-700 border border-indigo-200 z-10";
-                
                 cargarHistorialSupabase();
-                cargarSaldoBinanceSupabase();
+                cargarCapitalSupabase();
             } else {
-                badge.innerText = "Modo Visitante (Sin Guardado)";
+                badge.innerText = "Modo Visitante";
                 badge.className = "absolute top-4 right-4 md:top-8 md:right-8 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-gray-200 text-gray-600 border border-gray-300 z-10";
-                
-                botonesDB.forEach(btn => {
-                    btn.classList.replace('bg-gray-800', 'bg-gray-300');
-                    btn.classList.replace('hover:bg-gray-900', 'hover:bg-gray-300');
-                    btn.innerText = "Solo Admin puede guardar";
-                    btn.disabled = true;
-                });
-
-                document.getElementById('tabla-historial').innerHTML = `<tr id="historial-vacio"><td colspan="6" class="text-center p-8 text-gray-400 italic">El modo visitante no muestra el historial de compras personal.</td></tr>`;
+                document.getElementById('btn-guardar-capital').disabled = true;
+                document.getElementById('btn-guardar-capital').innerText = "Solo Admin";
             }
             obtenerTasasEnVivo();
         }
 
-        function cerrarSesion() {
-            localStorage.removeItem('finanzas_os_auth');
-            window.location.reload(); 
-        }
-        document.getElementById('btn-logout-desktop').addEventListener('click', cerrarSesion);
-        document.getElementById('btn-logout-movil').addEventListener('click', cerrarSesion);
+        document.getElementById('btn-logout-desktop')?.addEventListener('click', () => { localStorage.removeItem('finanzas_os_auth'); window.location.reload(); });
+        document.getElementById('btn-logout-movil')?.addEventListener('click', () => { localStorage.removeItem('finanzas_os_auth'); window.location.reload(); });
 
         // ==========================================
-        // ACORDEÓN E INPUT DE TITULAR
+        // NAVEGACIÓN Y MENÚ
+        // ==========================================
+        const vistas = { resumen: document.getElementById('vista-resumen'), calc: document.getElementById('vista-calculadora'), historial: document.getElementById('vista-historial') };
+        const nav = { 
+            btnDeskRes: document.getElementById('btn-nav-resumen'), 
+            btnDeskCalc: document.getElementById('btn-nav-calculadora'), 
+            btnDeskHist: document.getElementById('btn-nav-historial'), 
+            btnMobRes: document.getElementById('btn-mob-resumen'), 
+            btnMobCalc: document.getElementById('btn-mob-calculadora'), 
+            btnMobHist: document.getElementById('btn-mob-historial') 
+        };
+
+        function resetNavStyles() {
+            [nav.btnDeskRes, nav.btnDeskCalc, nav.btnDeskHist].forEach(b => { b?.classList.remove('bg-blue-50', 'text-blue-700'); b?.classList.add('text-gray-600'); });
+            [nav.btnMobRes, nav.btnMobCalc, nav.btnMobHist].forEach(b => { b?.classList.remove('text-blue-600', 'font-bold'); b?.classList.add('text-gray-500', 'font-medium'); });
+            Object.values(vistas).forEach(v => v?.classList.add('hidden'));
+        }
+
+        function cambiarVista(target) {
+            resetNavStyles();
+            if (target === 'calc') {
+                vistas.calc?.classList.remove('hidden'); 
+                nav.btnDeskCalc?.classList.add('bg-blue-50', 'text-blue-700'); 
+                nav.btnMobCalc?.classList.add('text-blue-600', 'font-bold');
+            } else if (target === 'historial') {
+                vistas.historial?.classList.remove('hidden'); 
+                nav.btnDeskHist?.classList.add('bg-blue-50', 'text-blue-700'); 
+                nav.btnMobHist?.classList.add('text-blue-600', 'font-bold');
+            } else {
+                vistas.resumen?.classList.remove('hidden'); 
+                nav.btnDeskRes?.classList.add('bg-blue-50', 'text-blue-700'); 
+                nav.btnMobRes?.classList.add('text-blue-600', 'font-bold');
+            }
+        }
+        
+        nav.btnDeskCalc?.addEventListener('click', () => cambiarVista('calc')); 
+        nav.btnMobCalc?.addEventListener('click', () => cambiarVista('calc'));
+        nav.btnDeskRes?.addEventListener('click', () => cambiarVista('resumen')); 
+        nav.btnMobRes?.addEventListener('click', () => cambiarVista('resumen'));
+        nav.btnDeskHist?.addEventListener('click', () => cambiarVista('historial')); 
+        nav.btnMobHist?.addEventListener('click', () => cambiarVista('historial'));
+
+        // ==========================================
+        // UI: ACORDEÓN
         // ==========================================
         document.querySelectorAll('.accordion-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -661,312 +581,327 @@
             });
         });
 
-        document.querySelectorAll('.btn-toggle-titular').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const input = this.nextElementSibling;
-                input.classList.toggle('hidden');
-                if(!input.classList.contains('hidden')) input.focus();
-            });
+        // ==========================================
+        // LÓGICA DE CAPITAL ESTRUCTURADO (MODAL Y BD)
+        // ==========================================
+        const modalCapital = document.getElementById('modal-capital');
+        const contenedorFilas = document.getElementById('contenedor-filas-capital');
+        const listBancos = ["Binance", "BDV", "Banesco", "Provincial", "Bancamiga", "Banplus", "BT (Tesoro)", "Banco Plaza", "Efectivo", "Zelle"];
+
+        document.getElementById('btn-abrir-modal-capital')?.addEventListener('click', () => {
+            renderizarModalCapital();
+            modalCapital.classList.remove('hidden');
         });
+        document.getElementById('btn-cerrar-modal-capital')?.addEventListener('click', () => modalCapital.classList.add('hidden'));
+        document.getElementById('btn-cancelar-capital')?.addEventListener('click', () => modalCapital.classList.add('hidden'));
 
-        // ==========================================
-        // NAVEGACIÓN COMPUTADORA Y MÓVIL
-        // ==========================================
-        const vistas = { resumen: document.getElementById('vista-resumen'), calc: document.getElementById('vista-calculadora'), historial: document.getElementById('vista-historial') };
-        const nav = { 
-            btnDeskRes: document.getElementById('btn-nav-resumen'), btnDeskCalc: document.getElementById('btn-nav-calculadora'), btnDeskHist: document.getElementById('btn-nav-historial'),
-            btnMobRes: document.getElementById('btn-mob-resumen'), btnMobCalc: document.getElementById('btn-mob-calculadora'), btnMobHist: document.getElementById('btn-mob-historial'),
-            flotante: document.getElementById('btn-abrir-modal') 
-        };
+        function crearFilaHTML(data = {id: Date.now(), banco: 'Binance', titular: '', bs: 0, usd: 0}) {
+            const div = document.createElement('div');
+            div.className = "fila-capital bg-white p-4 md:p-2 rounded-xl shadow-sm md:shadow-none border border-gray-200 md:border-none grid grid-cols-1 md:grid-cols-12 gap-3 items-center";
+            div.dataset.id = data.id;
+            
+            let options = listBancos.map(b => `<option value="${b}" ${data.banco===b?'selected':''}>${b}</option>`).join('');
 
-        function resetNavStyles() {
-            [nav.btnDeskRes, nav.btnDeskCalc, nav.btnDeskHist].forEach(b => { b.classList.remove('bg-blue-50', 'text-blue-700'); b.classList.add('text-gray-600'); });
-            [nav.btnMobRes, nav.btnMobCalc, nav.btnMobHist].forEach(b => { b.classList.remove('text-blue-600', 'font-bold'); b.classList.add('text-gray-500', 'font-medium'); });
-            Object.values(vistas).forEach(v => v.classList.add('hidden'));
+            div.innerHTML = `
+                <div class="col-span-12 md:col-span-3">
+                    <label class="md:hidden text-xs font-bold text-gray-500">Banco</label>
+                    <select class="input-banco w-full border rounded-lg p-2.5 bg-gray-50 outline-none focus:border-blue-500 font-medium">${options}</select>
+                </div>
+                <div class="col-span-12 md:col-span-3">
+                    <label class="md:hidden text-xs font-bold text-gray-500">Titular</label>
+                    <input type="text" class="input-titular w-full border rounded-lg p-2.5 outline-none focus:border-blue-500" placeholder="Ej. Mi Cuenta" value="${data.titular}">
+                </div>
+                <div class="col-span-12 md:col-span-2 relative">
+                    <label class="md:hidden text-xs font-bold text-gray-500">Saldo Bs</label>
+                    <span class="absolute left-3 top-9 md:top-3 text-gray-400 font-bold">Bs</span>
+                    <input type="number" class="input-bs w-full border rounded-lg p-2.5 pl-8 text-right outline-none focus:border-blue-500" value="${data.bs}">
+                </div>
+                <div class="col-span-12 md:col-span-3 relative">
+                    <label class="md:hidden text-xs font-bold text-gray-500">Saldo USD</label>
+                    <span class="absolute left-3 top-9 md:top-3 text-green-500 font-bold">$</span>
+                    <input type="number" class="input-usd w-full border rounded-lg p-2.5 pl-6 text-right font-bold text-green-600 outline-none focus:border-blue-500" value="${data.usd}">
+                </div>
+                <div class="col-span-12 md:col-span-1 flex justify-end md:justify-center mt-2 md:mt-0">
+                    <button class="btn-eliminar-fila text-red-400 hover:text-red-600 p-2 rounded-lg hover:bg-red-50 transition"><i class="fa-solid fa-trash"></i></button>
+                </div>
+            `;
+            
+            div.querySelector('.btn-eliminar-fila')?.addEventListener('click', () => div.remove());
+            return div;
         }
 
-        function cambiarVista(target) {
-            resetNavStyles();
-            if (target === 'calc') {
-                vistas.calc.classList.remove('hidden'); nav.flotante.classList.add('hidden');
-                nav.btnDeskCalc.classList.add('bg-blue-50', 'text-blue-700'); nav.btnMobCalc.classList.add('text-blue-600', 'font-bold');
-            } else if (target === 'historial') {
-                vistas.historial.classList.remove('hidden'); nav.flotante.classList.add('hidden');
-                nav.btnDeskHist.classList.add('bg-blue-50', 'text-blue-700'); nav.btnMobHist.classList.add('text-blue-600', 'font-bold');
+        function renderizarModalCapital() {
+            contenedorFilas.innerHTML = '';
+            if (estructuraCapital.length === 0) {
+                contenedorFilas.appendChild(crearFilaHTML());
             } else {
-                vistas.resumen.classList.remove('hidden'); nav.flotante.classList.remove('hidden');
-                nav.btnDeskRes.classList.add('bg-blue-50', 'text-blue-700'); nav.btnMobRes.classList.add('text-blue-600', 'font-bold');
+                estructuraCapital.forEach(item => contenedorFilas.appendChild(crearFilaHTML(item)));
             }
         }
 
-        nav.btnDeskCalc.addEventListener('click', () => cambiarVista('calc')); nav.btnMobCalc.addEventListener('click', () => cambiarVista('calc'));
-        nav.btnDeskRes.addEventListener('click', () => cambiarVista('resumen')); nav.btnMobRes.addEventListener('click', () => cambiarVista('resumen'));
-        nav.btnDeskHist.addEventListener('click', () => cambiarVista('historial')); nav.btnMobHist.addEventListener('click', () => cambiarVista('historial'));
+        document.getElementById('btn-add-fila-capital')?.addEventListener('click', () => {
+            contenedorFilas.appendChild(crearFilaHTML({id: Date.now(), banco: 'BDV', titular: '', bs: 0, usd: 0}));
+            const containerScroll = document.querySelector('.overflow-y-auto.flex-1');
+            if(containerScroll) containerScroll.scrollTop = containerScroll.scrollHeight;
+        });
+
+        // Guardar Distribución en BD
+        document.getElementById('btn-guardar-capital')?.addEventListener('click', async () => {
+            if (rolActual !== 'admin') return;
+            
+            const btn = document.getElementById('btn-guardar-capital');
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Guardando...`;
+            
+            const filas = document.querySelectorAll('.fila-capital');
+            let nuevaData = [];
+            filas.forEach(f => {
+                nuevaData.push({
+                    banco: f.querySelector('.input-banco').value,
+                    titular: f.querySelector('.input-titular').value || '',
+                    saldo_bs: parseFloat(f.querySelector('.input-bs').value) || 0,
+                    saldo_usd: parseFloat(f.querySelector('.input-usd').value) || 0
+                });
+            });
+
+            await supabaseClient.from('distribucion_capital').delete().neq('id', 0); // Limpia tabla
+            
+            if(nuevaData.length > 0) {
+                const { error } = await supabaseClient.from('distribucion_capital').insert(nuevaData);
+                if (error) alert("Error guardando capital: " + error.message);
+            }
+            
+            estructuraCapital = nuevaData;
+            actualizarUIResumenCapital();
+            
+            btn.innerHTML = `<i class="fa-solid fa-floppy-disk mr-2"></i>Guardar Distribución`;
+            modalCapital.classList.add('hidden');
+            mostrarToast("Estructura de capital actualizada");
+        });
+
+        // Cargar desde BD
+        async function cargarCapitalSupabase() {
+            const { data, error } = await supabaseClient.from('distribucion_capital').select('*').order('id', { ascending: true });
+            if (data && data.length > 0) {
+                estructuraCapital = data.map(item => ({
+                    id: item.id,
+                    banco: item.banco,
+                    titular: item.titular,
+                    bs: item.saldo_bs,
+                    usd: item.saldo_usd
+                }));
+            } else {
+                estructuraCapital = [];
+            }
+            actualizarUIResumenCapital();
+        }
+
+        // Actualizar UI del panel exterior
+        function actualizarUIResumenCapital() {
+            let totalUsd = 0;
+            let totalBs = 0;
+            const contenedorLista = document.getElementById('contenedor-resumen-lista');
+            contenedorLista.innerHTML = '';
+
+            if(estructuraCapital.length === 0) {
+                contenedorLista.innerHTML = `<div class="text-sm text-gray-400 italic">No hay distribución registrada. Pulsa "Ver Detalles" para añadir.</div>`;
+            } else {
+                estructuraCapital.forEach(c => {
+                    totalUsd += parseFloat(c.usd);
+                    totalBs += parseFloat(c.bs);
+                    
+                    let textos = [];
+                    if(c.usd > 0) textos.push(`<span class="text-green-600 font-bold">$${c.usd}</span>`);
+                    if(c.bs > 0) textos.push(`<span class="text-blue-600 font-bold">Bs ${c.bs}</span>`);
+
+                    contenedorLista.innerHTML += `
+                        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex flex-col justify-between">
+                            <div class="flex items-center mb-2">
+                                <i class="fa-solid fa-building-columns text-gray-400 mr-2 text-sm"></i>
+                                <span class="font-bold text-gray-700 text-sm truncate">${c.banco}</span>
+                            </div>
+                            <span class="text-xs text-gray-500 mb-2 truncate">${c.titular || 'Principal'}</span>
+                            <div class="flex flex-wrap gap-2 text-sm">${textos.join(' | ') || '$0'}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            document.getElementById('resumen-total-usd').innerText = `$ ${totalUsd.toFixed(2)}`;
+            document.getElementById('resumen-total-bs').innerText = `Bs ${totalBs.toFixed(2)}`;
+            document.getElementById('texto-balance').innerText = `$ ${totalUsd.toFixed(2)}`; // Actualiza también el Dashboard principal
+        }
+
 
         // ==========================================
-        // TASAS EN VIVO Y PROFITS
+        // API TASAS Y PROFITS
         // ==========================================
-        let tasaUsdtCompraGlobal = 0; let tasaIntervencionGlobal = 0;
         async function obtenerTasasEnVivo() {
             try {
                 const resBcv = await fetch('https://ve.dolarapi.com/v1/dolares/oficial'); const dataBcv = await resBcv.json();
                 document.getElementById('tasa-bcv').innerText = "Bs. " + dataBcv.promedio.toFixed(2);
-                tasaIntervencionGlobal = dataBcv.promedio + (dataBcv.promedio * 0.005);
-                document.getElementById('tasa-intervencion').innerText = "Bs. " + tasaIntervencionGlobal.toFixed(2);
-                document.getElementById('profit-tasa-inter').value = tasaIntervencionGlobal.toFixed(2);
-                document.getElementById('tasa-inter-bdv').value = tasaIntervencionGlobal.toFixed(2);
-            } catch (error) {}
+                let tInter = dataBcv.promedio + (dataBcv.promedio * 0.005);
+                document.getElementById('tasa-intervencion').innerText = "Bs. " + tInter.toFixed(2);
+                document.getElementById('profit-tasa-inter').value = tInter.toFixed(2);
+                
+                // Llenar autmáticamente todas las tasas de intervención en los acordeones
+                document.querySelectorAll('.input-tasa-inter').forEach(input => input.value = tInter.toFixed(2));
+            } catch (e) {}
             try {
-                const respuesta = await fetch('https://api-finanzas-os.vercel.app/api/tasas'); const datosBinance = await respuesta.json();
-                document.getElementById('tasa-usdt-compra').innerText = "Bs. " + datosBinance.compra.toFixed(2);
-                document.getElementById('tasa-usdt-venta').innerText = "Bs. " + datosBinance.venta.toFixed(2);
-                document.getElementById('profit-tasa-venta').value = datosBinance.venta.toFixed(2);
-                document.getElementById('tasa-venta-bdv').value = datosBinance.venta.toFixed(2);
-            } catch (error) {}
+                const resBi = await fetch('https://api-finanzas-os.vercel.app/api/tasas'); const dataBi = await resBi.json();
+                document.getElementById('tasa-usdt-compra').innerText = "Bs. " + dataBi.compra.toFixed(2);
+                document.getElementById('tasa-usdt-venta').innerText = "Bs. " + dataBi.venta.toFixed(2);
+                document.getElementById('profit-tasa-venta').value = dataBi.venta.toFixed(2);
+                
+                // Llenar autmáticamente todas las tasas de venta en los acordeones
+                document.querySelectorAll('.input-tasa-venta').forEach(input => input.value = dataBi.venta.toFixed(2));
+            } catch (e) {}
         }
 
-        document.getElementById('btn-toggle-profits').addEventListener('click', function() {
+        document.getElementById('btn-toggle-profits')?.addEventListener('click', function() {
             const p = document.getElementById('panel-profits');
             p.classList.toggle('hidden');
-            this.innerHTML = p.classList.contains('hidden') ? '<i class="fa-solid fa-chart-line mr-2 text-xl"></i> Abrir Calculadora de Profits' : '<i class="fa-solid fa-chart-line mr-2 text-xl"></i> Ocultar Calculadora de Profits';
+            this.innerHTML = p.classList.contains('hidden') ? '<i class="fa-solid fa-chart-line mr-2 text-xl"></i> Abrir Simulador de Ciclo' : '<i class="fa-solid fa-chart-line mr-2 text-xl"></i> Ocultar Simulador de Ciclo';
         });
 
-        function calcularProfitsAutomatica() {
+        document.querySelectorAll('.input-calc').forEach(i => i.addEventListener('input', () => {
             const usd = parseFloat(document.getElementById('profit-usd').value) || 0;
             const tVenta = parseFloat(document.getElementById('profit-tasa-venta').value) || 0;
             const tInter = parseFloat(document.getElementById('profit-tasa-inter').value) || 0;
-            const resBruto = document.getElementById('profit-res-bruto');
-            const resNetoBdv = document.getElementById('profit-res-neto-bdv');
-            const resNetoBanplus = document.getElementById('profit-res-neto-banplus');
-
-            if (usd > 0 && tVenta > 0 && tInter > 0) {
-                resBruto.innerText = "$ " + usd.toFixed(2);
-                const inversionUsdt = (usd * tInter) / tVenta;
-                
-                const usdtBdv = (usd * (1 - 0.025)) * (1 - 0.041);
-                const gananciaBdv = usdtBdv - inversionUsdt;
-                resNetoBdv.innerText = "₮ " + gananciaBdv.toFixed(2);
-                resNetoBdv.className = gananciaBdv >= 0 ? 'text-xl md:text-2xl font-bold text-green-600' : 'text-xl md:text-2xl font-bold text-red-600';
-
-                const usdtBanplus = usd * (1 - 0.035);
-                const gananciaBanplus = usdtBanplus - inversionUsdt;
-                resNetoBanplus.innerText = "₮ " + gananciaBanplus.toFixed(2);
-                resNetoBanplus.className = gananciaBanplus >= 0 ? 'text-xl md:text-2xl font-bold text-green-600' : 'text-xl md:text-2xl font-bold text-red-600';
-            } else {
-                resBruto.innerText = "$ 0.00";
-                resNetoBdv.innerText = "₮ 0.00"; resNetoBdv.className = 'text-xl md:text-2xl font-bold text-gray-400';
-                resNetoBanplus.innerText = "₮ 0.00"; resNetoBanplus.className = 'text-xl md:text-2xl font-bold text-gray-400';
-            }
-        }
-        document.querySelectorAll('.input-calc').forEach(i => i.addEventListener('input', calcularProfitsAutomatica));
-
-        // ==========================================
-        // CÁLCULO ESPECÍFICO BDV (CON GANANCIA EN VIVO)
-        // ==========================================
-        function calcularBdvConGanancia() {
-            const usd = parseFloat(document.getElementById('input-bdv').value) || 0;
-            const tVenta = parseFloat(document.getElementById('tasa-venta-bdv').value) || 0;
-            const tInter = parseFloat(document.getElementById('tasa-inter-bdv').value) || 0;
             
-            const resUsdt = document.getElementById('resultado-bdv');
-            const resGanancia = document.getElementById('ganancia-res-bdv');
+            if (usd > 0 && tVenta > 0 && tInter > 0) {
+                document.getElementById('profit-res-bruto').innerText = "$ " + usd.toFixed(2);
+                const inv = (usd * tInter) / tVenta;
+                const usdtBdv = (usd * (1 - 0.025)) * (1 - 0.041);
+                const ganancia = usdtBdv - inv;
+                document.getElementById('profit-res-neto-bdv').innerText = "₮ " + ganancia.toFixed(2);
+                document.getElementById('profit-res-neto-bdv').className = ganancia >= 0 ? 'text-xl font-bold text-green-600' : 'text-xl font-bold text-red-600';
+            }
+        }));
 
-            if (usd <= 0) {
+        // ==========================================
+        // CÁLCULO UNIVERSAL PARA TODOS LOS BANCOS
+        // ==========================================
+        function calcularBancoUniversal(container, cardCom, bpayCom) {
+            const monto = parseFloat(container.querySelector('.input-monto').value) || 0;
+            const tasaVenta = parseFloat(container.querySelector('.input-tasa-venta').value) || 0;
+            const tasaInter = parseFloat(container.querySelector('.input-tasa-inter').value) || 0;
+            
+            const resUsdt = container.querySelector('.res-usdt');
+            const resGanancia = container.querySelector('.res-ganancia');
+
+            if (monto <= 0) {
                 resUsdt.innerText = "₮ 0.00";
                 resGanancia.innerText = "₮ 0.00";
-                return;
+                resGanancia.className = "res-ganancia text-lg font-bold text-gray-400";
+                return { neto: 0, ganancia: 0 };
             }
 
-            // Neto USDT que llega al banco (tarjeta 2.5% + bpay 4.1%)
-            const usdtBdv = (usd * (1 - 0.025)) * (1 - 0.041);
-            resUsdt.innerText = "₮ " + usdtBdv.toFixed(2);
+            const usdtNeto = (monto * (1 - cardCom)) * (1 - bpayCom);
+            resUsdt.innerText = "₮ " + usdtNeto.toFixed(2);
 
-            if (tVenta > 0 && tInter > 0) {
-                const inversionUsdt = (usd * tInter) / tVenta;
-                const gananciaBdv = usdtBdv - inversionUsdt;
-                resGanancia.innerText = "₮ " + gananciaBdv.toFixed(2);
-                resGanancia.className = gananciaBdv >= 0 ? 'text-lg font-bold text-green-600' : 'text-lg font-bold text-red-600';
+            let ganancia = 0;
+            if (tasaVenta > 0 && tasaInter > 0) {
+                const inversionUsdt = (monto * tasaInter) / tasaVenta;
+                ganancia = usdtNeto - inversionUsdt;
+                resGanancia.innerText = "₮ " + ganancia.toFixed(2);
+                resGanancia.className = ganancia >= 0 ? 'res-ganancia text-lg font-bold text-green-600' : 'res-ganancia text-lg font-bold text-red-600';
             } else {
                 resGanancia.innerText = "₮ 0.00";
+                resGanancia.className = "res-ganancia text-lg font-bold text-gray-400";
             }
-        }
-        document.querySelectorAll('.input-calc-bdv').forEach(i => i.addEventListener('input', calcularBdvConGanancia));
-        document.getElementById('btn-calc-bdv').addEventListener('click', calcularBdvConGanancia);
-
-        // ==========================================
-        // CÁLCULO EN OTROS BANCOS
-        // ==========================================
-        function calcularNetoUsdt(inputId, resultadoId, descuentoTarjeta, descuentoBpay = 0.041) {
-            const usd = parseFloat(document.getElementById(inputId).value) || 0;
-            if (usd <= 0) { document.getElementById(resultadoId).innerText = "₮ 0.00"; return; }
-            const neto = (usd * (1 - descuentoTarjeta)) * (1 - descuentoBpay);
-            document.getElementById(resultadoId).innerText = "₮ " + neto.toFixed(2);
+            return { neto: usdtNeto, ganancia: ganancia };
         }
 
-        document.getElementById('btn-calc-bt').addEventListener('click', () => calcularNetoUsdt('input-bt', 'resultado-bt', 0.025));
-        document.getElementById('btn-calc-bancamiga').addEventListener('click', () => calcularNetoUsdt('input-bancamiga', 'resultado-bancamiga', 0.048));
-        document.getElementById('btn-calc-banplus').addEventListener('click', () => calcularNetoUsdt('input-banplus', 'resultado-banplus', 0.035, 0));
-        document.getElementById('btn-calc-provincial').addEventListener('click', () => calcularNetoUsdt('input-provincial', 'resultado-provincial', 0, 0.041));
-        document.getElementById('btn-calc-banesco').addEventListener('click', () => calcularNetoUsdt('input-banesco', 'resultado-banesco', 0, 0.041));
+        function guardarBancoUniversal(banco, container, cardCom, bpayCom) {
+            if (rolActual !== 'admin') return;
+            const { neto, ganancia } = calcularBancoUniversal(container, cardCom, bpayCom);
+            if (neto <= 0) return alert('Por favor, ingresa un monto mayor a cero para calcular.');
+            
+            const titular = container.querySelector('.input-titular').value || 'Mi Cuenta Principal';
+            const monto = parseFloat(container.querySelector('.input-monto').value);
+            
+            guardarCompraEnSupabase(banco, titular, monto, `₮ ${neto.toFixed(2)}`, `₮ ${ganancia.toFixed(2)}`);
+        }
 
-        document.getElementById('btn-calc-plaza').addEventListener('click', function() {
-            const monto = parseFloat(document.getElementById('input-plaza').value) || 0;
+        // Asignar listeners a botones de cálculo universal
+        document.querySelectorAll('.btn-calc').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const section = this.closest('.banco-section');
+                const cardCom = parseFloat(this.getAttribute('data-card'));
+                const bpayCom = parseFloat(this.getAttribute('data-bpay'));
+                calcularBancoUniversal(section, cardCom, bpayCom);
+            });
+        });
+
+        document.querySelectorAll('.btn-save').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const section = this.closest('.banco-section');
+                const banco = this.getAttribute('data-banco');
+                const cardCom = parseFloat(this.getAttribute('data-card'));
+                const bpayCom = parseFloat(this.getAttribute('data-bpay'));
+                guardarBancoUniversal(banco, section, cardCom, bpayCom);
+            });
+        });
+
+        // Casos especiales (Banco Plaza)
+        document.getElementById('btn-calc-plaza')?.addEventListener('click', function() {
+            const section = this.closest('.banco-section');
+            const bpayCom = parseFloat(document.getElementById('plataforma-plaza').value);
+            
             const fechaInput = document.getElementById('fecha-plaza').value;
             if (fechaInput) {
                 const partes = fechaInput.split('-'); const f = new Date(partes[0], partes[1] - 1, partes[2]); f.setDate(f.getDate() + 7);
                 document.getElementById('fecha-acreditacion-plaza').innerText = `${['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'][f.getDay()]}, ${String(f.getDate()).padStart(2,'0')}/${String(f.getMonth()+1).padStart(2,'0')}/${f.getFullYear()}`;
             }
-            if (monto > 0) {
-                document.getElementById('resultado-plaza').innerText = "₮ " + (document.getElementById('plataforma-plaza').value === 'bpay' ? monto * (1 - 0.041) : monto).toFixed(2);
-            }
+            calcularBancoUniversal(section, 0, bpayCom);
+        });
+
+        document.getElementById('btn-save-plaza')?.addEventListener('click', function() {
+            const section = this.closest('.banco-section');
+            const bpayCom = parseFloat(document.getElementById('plataforma-plaza').value);
+            guardarBancoUniversal('Banco Plaza', section, 0, bpayCom);
         });
 
         // ==========================================
-        // OPERACIONES SUPABASE (HISTORIAL CON GANANCIA)
+        // TOAST Y OTROS HELPERS
         // ==========================================
-        function mostrarToast(msg = "Operación guardada en Supabase") {
-            const toast = document.getElementById('toast-success');
+        function mostrarToast(msg) {
             document.getElementById('toast-mensaje').innerText = msg;
-            toast.classList.add('toast-show');
-            setTimeout(() => { toast.classList.remove('toast-show'); }, 3000);
+            document.getElementById('toast-success').classList.add('toast-show');
+            setTimeout(() => document.getElementById('toast-success').classList.remove('toast-show'), 3000);
         }
 
         async function cargarHistorialSupabase() {
+            const { data } = await supabaseClient.from('compras_bancos').select('*').order('created_at', { ascending: false });
             const tabla = document.getElementById('tabla-historial');
-            const { data, error } = await supabaseClient
-                .from('compras_bancos')
-                .select('*')
-                .order('id', { ascending: false });
-
-            if (error) { console.error("Error al cargar historial:", error); return; }
-
-            if (!data || data.length === 0) {
-                tabla.innerHTML = `<tr id="historial-vacio"><td colspan="6" class="text-center p-8 text-gray-400 italic">No hay operaciones registradas aún.</td></tr>`;
-                return;
-            }
-
-            tabla.innerHTML = '';
-            data.forEach(item => {
-                const f = new Date(item.created_at);
-                const fechaStr = f.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-                const gananciaTxt = item.ganancia_neta || '₮ 0.00';
-                const colorGanancia = gananciaTxt.includes('-') ? 'text-red-600 font-bold' : 'text-green-600 font-bold';
-
-                const tr = document.createElement('tr');
-                tr.className = "border-b border-gray-100 hover:bg-gray-50 transition";
-                tr.innerHTML = `
-                    <td class="p-3 text-gray-500">${fechaStr}</td>
+            if(!data || data.length === 0) return;
+            
+            tabla.innerHTML = data.map(item => {
+                const colorGanancia = (item.ganancia_neta || '').includes('-') ? 'text-red-600 font-bold' : 'text-indigo-600 font-bold';
+                return `
+                <tr class="border-b border-gray-100 hover:bg-gray-50">
+                    <td class="p-3 text-gray-500">${new Date(item.created_at).toLocaleDateString()}</td>
                     <td class="p-3 font-semibold text-blue-600">${item.banco}</td>
-                    <td class="p-3"><span class="bg-gray-100 text-gray-700 py-1 px-2 rounded text-xs font-bold">${item.titular}</span></td>
-                    <td class="p-3 text-right font-medium">$${parseFloat(item.monto).toFixed(2)}</td>
+                    <td class="p-3"><span class="bg-gray-100 px-2 py-1 rounded text-xs font-bold">${item.titular}</span></td>
+                    <td class="p-3 text-right font-medium">$${item.monto}</td>
                     <td class="p-3 text-right font-bold text-green-600">${item.neto_usdt}</td>
-                    <td class="p-3 text-right ${colorGanancia}">${gananciaTxt}</td>
-                `;
-                tabla.appendChild(tr);
-            });
+                    <td class="p-3 text-right ${colorGanancia}">${item.ganancia_neta || '₮ 0.00'}</td>
+                </tr>
+                `
+            }).join('');
         }
 
         async function guardarCompraEnSupabase(banco, titular, monto, netoUsdt, gananciaNeta = '₮ 0.00') {
-            if (rolActual !== 'admin') return;
-            const { data, error } = await supabaseClient
-                .from('compras_bancos')
+            const { error } = await supabaseClient.from('compras_bancos')
                 .insert([{ banco, titular, monto: parseFloat(monto), neto_usdt: netoUsdt, ganancia_neta: gananciaNeta }]);
 
             if (error) {
                 alert("Error guardando en Supabase: " + error.message);
             } else {
-                mostrarToast("Compra y ganancia registradas en Supabase");
+                mostrarToast("Compra y ganancia registradas");
                 cargarHistorialSupabase();
             }
         }
-
-        document.getElementById('btn-guardar-saldo').addEventListener('click', async () => {
-            if (rolActual !== 'admin') return alert('Solo el Admin puede guardar saldo.');
-            const monto = parseFloat(document.getElementById('input-saldo-binance').value) || 0;
-            if (monto <= 0) return alert('Ingresa un monto válido.');
-
-            const fechaActual = new Date().toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }).replace(',', '');
-
-            const { data, error } = await supabaseClient
-                .from('saldo_binance')
-                .insert([{ monto, fecha_texto: fechaActual }]);
-
-            if (error) {
-                alert("Error guardando saldo: " + error.message);
-            } else {
-                document.getElementById('fecha-saldo-texto').innerText = fechaActual;
-                document.getElementById('monto-saldo-texto').innerText = "₮ " + monto.toFixed(2);
-                document.getElementById('texto-saldo-fecha').classList.remove('hidden');
-                mostrarToast("Saldo Binance actualizado en la nube");
-            }
-        });
-
-        async function cargarSaldoBinanceSupabase() {
-            const { data, error } = await supabaseClient
-                .from('saldo_binance')
-                .select('*')
-                .order('id', { ascending: false })
-                .limit(1);
-
-            if (data && data.length > 0) {
-                const ultimo = data[0];
-                document.getElementById('input-saldo-binance').value = ultimo.monto;
-                document.getElementById('fecha-saldo-texto').innerText = ultimo.fecha_texto;
-                document.getElementById('monto-saldo-texto').innerText = "₮ " + parseFloat(ultimo.monto).toFixed(2);
-                document.getElementById('texto-saldo-fecha').classList.remove('hidden');
-            }
-        }
-
-        // Listener Guardar BDV (Con su ganancia neta calculada)
-        document.getElementById('btn-save-bdv').addEventListener('click', function() {
-            const monto = document.getElementById('input-bdv').value;
-            const neto = document.getElementById('resultado-bdv').innerText;
-            const ganancia = document.getElementById('ganancia-res-bdv').innerText;
-            const titular = document.getElementById('titular-bdv').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("BDV", titular, monto, neto, ganancia);
-        });
-
-        document.getElementById('btn-save-bt').addEventListener('click', function() {
-            const monto = document.getElementById('input-bt').value;
-            const neto = document.getElementById('resultado-bt').innerText;
-            const titular = document.getElementById('titular-bt').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("BT (Tesoro)", titular, monto, neto);
-        });
-
-        document.getElementById('btn-save-banplus').addEventListener('click', function() {
-            const monto = document.getElementById('input-banplus').value;
-            const neto = document.getElementById('resultado-banplus').innerText;
-            const titular = document.getElementById('titular-banplus').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("Banplus", titular, monto, neto);
-        });
-
-        document.getElementById('btn-save-bancamiga').addEventListener('click', function() {
-            const monto = document.getElementById('input-bancamiga').value;
-            const neto = document.getElementById('resultado-bancamiga').innerText;
-            const titular = document.getElementById('titular-bancamiga').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("Bancamiga", titular, monto, neto);
-        });
-        
-        document.getElementById('btn-save-provincial').addEventListener('click', function() {
-            const monto = document.getElementById('input-provincial').value;
-            const neto = document.getElementById('resultado-provincial').innerText;
-            const titular = document.getElementById('titular-provincial').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("Provincial", titular, monto, neto);
-        });
-        
-        document.getElementById('btn-save-banesco').addEventListener('click', function() {
-            const monto = document.getElementById('input-banesco').value;
-            const neto = document.getElementById('resultado-banesco').innerText;
-            const titular = document.getElementById('titular-banesco').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("Banesco", titular, monto, neto);
-        });
-
-        document.getElementById('btn-save-plaza').addEventListener('click', function() {
-            const monto = document.getElementById('input-plaza').value;
-            const neto = document.getElementById('resultado-plaza').innerText;
-            const titular = document.getElementById('titular-plaza').value || 'Mi Cuenta Principal';
-            if (monto > 0 && neto !== "₮ 0.00") guardarCompraEnSupabase("Banco Plaza", titular, monto, neto);
-        });
     </script>
 </body>
 </html>
