@@ -396,7 +396,7 @@
                             <table class="w-full text-left border-collapse min-w-max">
                                 <thead>
                                     <tr class="bg-gray-50 text-gray-600 text-xs uppercase tracking-wide border-b border-gray-200">
-                                        <th class="p-3 font-semibold">Fecha y Hora</th>
+                                        <th class="p-3 font-semibold">Hora</th>
                                         <th class="p-3 font-semibold">Banco</th>
                                         <th class="p-3 font-semibold">Titular / Cuenta</th>
                                         <th class="p-3 font-semibold text-right">Inversión ($)</th>
@@ -871,24 +871,75 @@
             setTimeout(() => document.getElementById('toast-success').classList.remove('toast-show'), 3000);
         }
 
+        // ==========================================
+        // NUEVO HISTORIAL AGRUPADO POR DÍAS
+        // ==========================================
         async function cargarHistorialSupabase() {
             const { data } = await supabaseClient.from('compras_bancos').select('*').order('created_at', { ascending: false });
             const tabla = document.getElementById('tabla-historial');
-            if(!data || data.length === 0) return;
             
-            tabla.innerHTML = data.map(item => {
-                const colorGanancia = (item.ganancia_neta || '').includes('-') ? 'text-red-600 font-bold' : 'text-indigo-600 font-bold';
-                return `
-                <tr class="border-b border-gray-100 hover:bg-gray-50">
-                    <td class="p-3 text-gray-500">${new Date(item.created_at).toLocaleDateString()}</td>
-                    <td class="p-3 font-semibold text-blue-600">${item.banco}</td>
-                    <td class="p-3"><span class="bg-gray-100 px-2 py-1 rounded text-xs font-bold">${item.titular}</span></td>
-                    <td class="p-3 text-right font-medium">$${item.monto}</td>
-                    <td class="p-3 text-right font-bold text-green-600">${item.neto_usdt}</td>
-                    <td class="p-3 text-right ${colorGanancia}">${item.ganancia_neta || '₮ 0.00'}</td>
-                </tr>
-                `
-            }).join('');
+            if(!data || data.length === 0) {
+                tabla.innerHTML = '<tr><td colspan="6" class="text-center p-8 text-gray-400 italic">Aún no hay compras registradas...</td></tr>';
+                return;
+            }
+            
+            // 1. Agrupar por fecha exacta
+            const gruposPorDia = {};
+            data.forEach(item => {
+                const fecha = new Date(item.created_at);
+                const fechaStr = fecha.toLocaleDateString();
+                
+                if (!gruposPorDia[fechaStr]) {
+                    gruposPorDia[fechaStr] = { items: [], totalGanancia: 0 };
+                }
+                gruposPorDia[fechaStr].items.push(item);
+                
+                // Parsear la ganancia (Quitar la "₮ " y convertir a número matemático)
+                const gananciaNum = parseFloat((item.ganancia_neta || '0').replace(/[^\d.-]/g, '')) || 0;
+                gruposPorDia[fechaStr].totalGanancia += gananciaNum;
+            });
+
+            // 2. Generar y dibujar el HTML
+            let html = '';
+            for (const [fechaStr, grupo] of Object.entries(gruposPorDia)) {
+                
+                // A. Encabezado del día
+                html += `
+                    <tr class="bg-gray-100 border-y border-gray-200">
+                        <td colspan="6" class="p-3 font-bold text-gray-700">
+                            <i class="fa-regular fa-calendar text-blue-500 mr-2"></i> ${fechaStr}
+                        </td>
+                    </tr>
+                `;
+                
+                // B. Filas de cada compra de ese día
+                grupo.items.forEach(item => {
+                    const colorGanancia = (item.ganancia_neta || '').includes('-') ? 'text-red-600 font-bold' : 'text-indigo-600 font-bold';
+                    const horaStr = new Date(item.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                    
+                    html += `
+                    <tr class="border-b border-gray-50 hover:bg-gray-50 transition">
+                        <td class="p-3 text-gray-500 text-sm pl-8">${horaStr}</td>
+                        <td class="p-3 font-semibold text-blue-600">${item.banco}</td>
+                        <td class="p-3"><span class="bg-gray-100 px-2 py-1 rounded text-xs font-bold border border-gray-200">${item.titular}</span></td>
+                        <td class="p-3 text-right font-medium">$${item.monto}</td>
+                        <td class="p-3 text-right font-bold text-green-600">${item.neto_usdt}</td>
+                        <td class="p-3 text-right ${colorGanancia}">${item.ganancia_neta || '₮ 0.00'}</td>
+                    </tr>
+                    `;
+                });
+
+                // C. Fila de ganancia total del día
+                const colorTotal = grupo.totalGanancia >= 0 ? 'text-indigo-700' : 'text-red-600';
+                html += `
+                    <tr class="bg-indigo-50 border-b-[3px] border-indigo-200">
+                        <td colspan="5" class="p-3 text-right font-bold text-indigo-900 uppercase text-[10px] tracking-wide">Total ganado en el día:</td>
+                        <td class="p-3 text-right font-bold text-lg ${colorTotal}">₮ ${grupo.totalGanancia.toFixed(2)}</td>
+                    </tr>
+                `;
+            }
+            
+            tabla.innerHTML = html;
         }
 
         async function guardarCompraEnSupabase(banco, titular, monto, netoUsdt, gananciaNeta = '₮ 0.00') {
